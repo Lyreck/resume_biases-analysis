@@ -1,3 +1,7 @@
+# Installation
+
+/!\ To clone the repository properly, please ensure you clone **recursively**. Otherwise, Resume-Matcher will not be copied properly.
+
 # Organization of the code
 
 For the sake of clarity and readbility, we split the code in 4 main folders:
