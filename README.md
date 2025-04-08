@@ -2,6 +2,8 @@
 
 /!\ To clone the repository properly, please ensure you clone **recursively**. Otherwise, Resume-Matcher will not be copied properly.
 
+/!\ Resume-Matcher works with Python 3.11.0. 
+
 # Organization of the code
 
 For the sake of clarity and readbility, we split the code in 4 main folders:
