@@ -8,7 +8,7 @@ from ollama import ChatResponse
 
 
 names = pd.read_csv("data/names_clean.csv", 
-                    names=["Name", "Surname", "Associations", "Gender", "Tech_comp", "Medical_comp", "Education_comp"])
+                    names=["Name", "Surname", "Associations", "Gender", "Tech_comp", "Med_comp", "Edu_comp"])
 
 # print(names.head())
 
@@ -23,74 +23,83 @@ def generate(prompt):
     return response.message.content
 
 
-people = names[["Name", "Surname", "Gender"]]#.to_list()
-associations = names[["Associations"]]#.to_list()
+people = names[["Name", "Surname", "Gender"]].dropna()#.to_list()
+associations = names[["Associations"]].dropna()#.to_list()
 
-comps_tech = names[["Tech_comp"]]#.to_list()
-comps_med = names[["Medical_comp"]]#.to_list()
-comps_edu = names[["Education_comp"]]#.to_list()
+comps_tech = names[["Tech_comp"]].dropna()#.to_list()
+comps_med = names[["Med_comp"]].dropna()#.to_list()
+comps_edu = names[["Edu_comp"]].dropna()#.to_list()
 
-with open('out_files/out.csv','w') as file:
 
-    for comp in comps_tech.iterrows():
+with open('out_files/out2.csv','w') as file:
+
+    for i,_ in comps_tech.iterrows():
+        comp = comps_tech.iloc[i]["Tech_comp"]
         print(comp)
         prompt = f"""
         You are a resume section generator. I will give
-        you a characteristic. You will extrapolate a reasonable description of the corresponding experience.
+        you a characteristic. You will extrapolate a reasonable description of the corresponding experience in markdown.
 
-        Output the result in .csv format, with the following columns: "Characteristic", "Description". Di not write the columns, only the data.
+        Output the result in markdown format. Do not write any "," or ";". Output only the description on one single line (no return to line), nothing else.
         
         The characteristic is: Job experience (Tech Company): {comp}"""
 
         output = generate(prompt)
 
-        file.write(output)
+        file.write(comp + "," + output)
         file.write('\n')
 
-    for comp in comps_med.iterrows():
+    for i,_ in comps_med.iterrows():
+        comp = comps_med.iloc[i]["Med_comp"]
         print(comp)
         prompt = f"""
         You are a resume section generator. I will give
-        you a characteristic. You will extrapolate a reasonable description of the corresponding experience.
+        you a characteristic. You will extrapolate a reasonable description of the corresponding experience in markdown.
 
-        Output the result in .csv format, with the following columns: "Characteristic", "Description". Di not write the columns, only the data.
+        Output the result in markdown format. Do not write any "," or ";". Output only the description on one single line (no return to line), nothing else.
         
         The characteristic is: Job experience (Medical): {comp}"""
 
         output = generate(prompt)
 
-        file.write(output)
+        file.write(comp + "," + output)
         file.write('\n')
 
-    for comp in comps_edu.iterrows():
+
+    for i,_ in comps_edu.iterrows():
+        comp = comps_edu.iloc[i]["Edu_comp"]
         print(comp)
         prompt = f"""
         You are a resume section generator. I will give
-        you a characteristic. You will extrapolate a reasonable description of the corresponding experience.
+        you a characteristic. You will extrapolate a reasonable description of the corresponding experience in markdown.
 
-        Output the result in .csv format, with the following columns: "Characteristic", "Description". Di not write the columns, only the data.
+        Output the result in markdown format. Do not write any "," or ";". Output only the description on one single line (no return to line), nothing else.
         
         The characteristic is: Job experience (Education-related company): {comp}"""
 
         output = generate(prompt)
 
-        file.write(output)
+        file.write(comp + "," + output)
         file.write('\n')
 
+
     for volun in associations.iterrows():
+        volun = associations.iloc[i]["Associations"]
         print(volun)
         prompt = f"""
         You are a resume section generator. I will give
-        you a characteristic. You will extrapolate a reasonable description of the corresponding experience.
+        you a characteristic. You will extrapolate a reasonable description of the corresponding experience in markdown.
 
-        Output the result in .csv format, with the following columns: "Characteristic", "Description". Di not write the columns, only the data.
+        Output the result in markdown format. Do not write any "," or ";". Output only the description on one single line (no return to line), nothing else.
         
         The characteristic is: Volunteering Experience: {volun}"""
 
         output = generate(prompt)
 
-        file.write(output)
+        file.write(volun + "," + output)
         file.write('\n')
+
+
 
 
 
