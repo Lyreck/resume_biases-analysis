@@ -26,9 +26,9 @@ def generate(prompt):
 people = names[["Name", "Surname", "Gender"]].dropna()#.to_list()
 associations = names[["Associations"]].dropna()#.to_list()
 
-comps_tech = names[["Tech_comp"]].dropna()#.to_list()
-comps_med = names[["Med_comp"]].dropna()#.to_list()
-comps_edu = names[["Edu_comp"]].dropna()#.to_list()
+comps_tech = names[["Tech_comp"]].dropna().drop_duplicates()#.to_list()
+comps_med = names[["Med_comp"]].dropna().drop_duplicates()#.to_list()
+comps_edu = names[["Edu_comp"]].dropna().drop_duplicates()#.to_list()
 
 
 with open('out_files/out2.csv','w') as file:
@@ -83,7 +83,7 @@ with open('out_files/out2.csv','w') as file:
         file.write('\n')
 
 
-    for volun in associations.iterrows():
+    for i,_ in associations.iterrows():
         volun = associations.iloc[i]["Associations"]
         print(volun)
         prompt = f"""
