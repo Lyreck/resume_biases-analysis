@@ -30,74 +30,78 @@ comps_tech = names[["Tech_comp"]].dropna().drop_duplicates()#.to_list()
 comps_med = names[["Med_comp"]].dropna().drop_duplicates()#.to_list()
 comps_edu = names[["Edu_comp"]].dropna().drop_duplicates()#.to_list()
 
+tech, med, edu, asso = False, False, False, True
+print(tech, med, edu, asso) #To keep track of who is being generated
 
 with open('out_files/out2.csv','w') as file:
 
-    for i,_ in comps_tech.iterrows():
-        comp = comps_tech.iloc[i]["Tech_comp"]
-        print(comp)
-        prompt = f"""
-        You are a resume section generator. I will give
-        you a characteristic. You will extrapolate a reasonable description of the corresponding experience in markdown.
+    if tech: 
+        for i,_ in comps_tech.iterrows():
+            comp = comps_tech.iloc[i]["Tech_comp"]
+            print(comp)
+            prompt = f"""
+            You are a resume section generator. I will give
+            you a characteristic. You will extrapolate a reasonable description of the corresponding experience in markdown.
 
-        Output the result in markdown format. Do not write any "," or ";". Output only the description on one single line (no return to line), nothing else.
-        
-        The characteristic is: Job experience (Tech Company): {comp}"""
+            Output the result in markdown format. Do not write any "," or ";". Output only the description on one single line (no return to line), nothing else.
+            
+            The characteristic is: Job experience (Tech Company): {comp}"""
 
-        output = generate(prompt)
+            output = generate(prompt)
 
-        file.write(comp + "," + output)
-        file.write('\n')
+            file.write(comp + "," + output)
+            file.write('\n')
 
-    for i,_ in comps_med.iterrows():
-        comp = comps_med.iloc[i]["Med_comp"]
-        print(comp)
-        prompt = f"""
-        You are a resume section generator. I will give
-        you a characteristic. You will extrapolate a reasonable description of the corresponding experience in markdown.
+    if med: 
+        for i,_ in comps_med.iterrows():
+            comp = comps_med.iloc[i]["Med_comp"]
+            print(comp)
+            prompt = f"""
+            You are a resume section generator. I will give
+            you a characteristic. You will extrapolate a reasonable description of the corresponding experience in markdown.
 
-        Output the result in markdown format. Do not write any "," or ";". Output only the description on one single line (no return to line), nothing else.
-        
-        The characteristic is: Job experience (Medical): {comp}"""
+            Output the result in markdown format. Do not write any "," or ";". Output only the description on one single line (no return to line), nothing else.
+            
+            The characteristic is: Job experience (Medical): {comp}"""
 
-        output = generate(prompt)
+            output = generate(prompt)
 
-        file.write(comp + "," + output)
-        file.write('\n')
+            file.write(comp + "," + output)
+            file.write('\n')
 
+    if edu:
+        for i,_ in comps_edu.iterrows():
+            comp = comps_edu.iloc[i]["Edu_comp"]
+            print(comp)
+            prompt = f"""
+            You are a resume section generator. I will give
+            you a characteristic. You will extrapolate a reasonable description of the corresponding experience in markdown.
 
-    for i,_ in comps_edu.iterrows():
-        comp = comps_edu.iloc[i]["Edu_comp"]
-        print(comp)
-        prompt = f"""
-        You are a resume section generator. I will give
-        you a characteristic. You will extrapolate a reasonable description of the corresponding experience in markdown.
+            Output the result in markdown format. Do not write any "," or ";". Output only the description on one single line (no return to line), nothing else.
+            
+            The characteristic is: Job experience (Education-related company): {comp}"""
 
-        Output the result in markdown format. Do not write any "," or ";". Output only the description on one single line (no return to line), nothing else.
-        
-        The characteristic is: Job experience (Education-related company): {comp}"""
+            output = generate(prompt)
 
-        output = generate(prompt)
+            file.write(comp + "," + output)
+            file.write('\n')
 
-        file.write(comp + "," + output)
-        file.write('\n')
+    if asso:
+        for i,_ in associations.iterrows():
+            volun = associations.iloc[i]["Associations"]
+            print(volun)
+            prompt = f"""
+            You are a resume section generator. I will give
+            you a characteristic. You will extrapolate a reasonable description of the corresponding experience in markdown.
 
+            Output the result in markdown format. Do not write any "," or ";". Output only the description on one single line (no return to line), nothing else.
+            
+            The characteristic is: Volunteering Experience: {volun}"""
 
-    for i,_ in associations.iterrows():
-        volun = associations.iloc[i]["Associations"]
-        print(volun)
-        prompt = f"""
-        You are a resume section generator. I will give
-        you a characteristic. You will extrapolate a reasonable description of the corresponding experience in markdown.
+            output = generate(prompt)
 
-        Output the result in markdown format. Do not write any "," or ";". Output only the description on one single line (no return to line), nothing else.
-        
-        The characteristic is: Volunteering Experience: {volun}"""
-
-        output = generate(prompt)
-
-        file.write(volun + "," + output)
-        file.write('\n')
+            file.write(volun + "," + output)
+            file.write('\n')
 
 
 
