@@ -2,10 +2,19 @@
 
 import json
 import os
+import sys
 
 
-from ..Resume-Matcher.scripts.similarity.get_score import *
 
+
+# export PYTHONPATH=/home/lld_fixe/code/resume_biases-analysis/code
+
+os.chdir("/home/lld_fixe/code/resume_biases-analysis/code/Resume_Matcher")
+print(os.getcwd())
+
+# from ..Resume_Matcher.scripts.similarity.get_score import *
+# from ....Resume_Matcher.scripts.similarity.get_score import * #choper le Resume_Matcher qui est dehors
+from scripts.similarity.get_score import * ## marche pas
 
 resume_name = "john_doe.pdf" ## Enter the name of the resume (name of the file)
 jd_name = "job_desc_front_end_engineer.pdf" ## Enter the name of the job description (name of the file)
