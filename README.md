@@ -2,12 +2,11 @@
 
 /!\ To clone the repository properly, please ensure you clone **recursively**. Otherwise, Resume-Matcher will not be copied properly.
 
-`git clone --recursive https://github.com/Lyreck/resume_biases-analysis.git`
+=> `git clone --recursive https://github.com/Lyreck/resume_biases-analysis.git`
 
 /!\ Resume-Matcher works with Python 3.11.0. 
-You can install it using pyenv: `pyenv install python 3.11.0`
-
-And then create a virtual environment using this python version: `pyenv virtualenv 3.11.00 env-name`
+- You can install it using pyenv: `pyenv install python 3.11.0`
+- And then create a virtual environment using this python version: `pyenv virtualenv 3.11.00 env-name`
 
 # Organization of the code
 
