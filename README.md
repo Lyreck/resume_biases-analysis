@@ -22,4 +22,4 @@ The resume sections are LLM-generated and post-processed automatically, but stil
 We are currently working on resolving some dependcy version issues between Resume-Matcher and our own programs. *This is a work in progress*.
 
 
-This code uses [Resume-Matcher](https://github.com/srbhr/Resume-Matcher) for resume parsing, and Mistral-small 3 through ollama python for resume generation.
+This code uses [Resume-Matcher](https://github.com/srbhr/Resume-Matcher) for resume parsing, and [Mistral-small 3](https://ollama.com/library/mistral-small) through [Ollama Python](https://github.com/ollama/ollama-python) for resume generation.
