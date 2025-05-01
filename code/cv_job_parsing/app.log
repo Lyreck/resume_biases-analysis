@@ -1,12 +1,14 @@
-2025-04-25 16:11:50,772 (pdf_to_json.py:53) - INFO: Started to read from Data/Resumes
-2025-04-25 16:11:50,772 (pdf_to_json.py:50) - INFO: Deleted old files from /Users/lld/Desktop/Ecole/SciencesPo/S2/biases_in_AI/group-project/resume_biases-analysis/code/cv-job_parsing/Data/Processed/Resumes
-2025-04-25 16:11:50,773 (pdf_to_json.py:64) - INFO: Reading from Data/Resumes is now complete.
-2025-04-25 16:11:50,773 (pdf_to_json.py:75) - INFO: Started parsing the resumes.
-2025-04-25 16:11:53,628 (core.py:65) - INFO: loaded 'en_core_web_md' spaCy language pipeline
-2025-04-25 16:11:59,144 (pdf_to_json.py:80) - INFO: Parsing of the resumes is now complete.
-2025-04-25 16:11:59,144 (pdf_to_json.py:82) - INFO: Started to read from Data/JobDescription
-2025-04-25 16:11:59,144 (pdf_to_json.py:50) - INFO: Deleted old files from /Users/lld/Desktop/Ecole/SciencesPo/S2/biases_in_AI/group-project/resume_biases-analysis/code/cv-job_parsing/Data/Processed/JobDescription
-2025-04-25 16:11:59,144 (pdf_to_json.py:93) - INFO: Reading from Data/JobDescription is now complete.
-2025-04-25 16:11:59,144 (pdf_to_json.py:106) - INFO: Started parsing the Job Descriptions.
-2025-04-25 16:12:04,337 (pdf_to_json.py:110) - INFO: Parsing of the Job Descriptions is now complete.
-2025-04-25 16:12:04,338 (pdf_to_json.py:111) - INFO: Success now run `streamlit run streamlit_second.py`
+2025-05-01 22:47:47,396 (pdf_to_json.py:60) - INFO: Started to read from Data/Resumes
+2025-05-01 22:47:47,396 (pdf_to_json.py:36) - INFO: Deleted old files from /Users/lld/Desktop/Ecole/SciencesPo/S2/biases_in_AI/group-project/resume_biases-analysis/code/cv_job_parsing/Data/Processed/Resumes
+2025-05-01 22:47:47,396 (pdf_to_json.py:71) - INFO: Reading from Data/Resumes is now complete.
+2025-05-01 22:47:47,396 (pdf_to_json.py:82) - INFO: Started parsing the resumes.
+2025-05-01 22:47:49,633 (core.py:65) - INFO: loaded 'en_core_web_md' spaCy language pipeline
+2025-05-01 22:47:49,941 (pdf_to_json.py:86) - INFO: Parsing of the resumes is now complete.
+2025-05-01 22:47:49,941 (pdf_to_json.py:88) - INFO: Started to read from Data/JobDescription
+2025-05-01 22:47:49,942 (pdf_to_json.py:36) - INFO: Deleted old files from /Users/lld/Desktop/Ecole/SciencesPo/S2/biases_in_AI/group-project/resume_biases-analysis/code/cv_job_parsing/Data/Processed/JobDescription
+2025-05-01 22:47:49,942 (pdf_to_json.py:99) - INFO: Reading from Data/JobDescription is now complete.
+2025-05-01 22:47:49,942 (pdf_to_json.py:112) - INFO: Started parsing the Job Descriptions.
+2025-05-01 22:47:50,762 (pdf_to_json.py:116) - INFO: Parsing of the Job Descriptions is now complete.
+2025-05-01 22:47:50,762 (pdf_to_json.py:117) - INFO: Success now run `streamlit run streamlit_second.py`
+2025-05-01 22:47:50,765 (get_score.py:128) - INFO: Started getting similarity score
+2025-05-01 22:47:52,175 (get_score.py:142) - INFO: Finished getting similarity score
