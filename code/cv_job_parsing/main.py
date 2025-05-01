@@ -17,4 +17,4 @@ for resume in os.listdir("Data/Processed/Resumes"):
         df = pd.concat([df, pd.DataFrame([[resume, job_description, score]], columns=["Resume", "JobDescription", "Score"])])
         print(f"Score between {resume} and {job_description} is: {score}")
 
-print(df)
+df.to_csv("../../data/dataframes/presentation_scores.csv", index=False)

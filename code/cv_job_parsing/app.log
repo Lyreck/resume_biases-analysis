@@ -1,14 +1,42 @@
-2025-05-01 22:47:47,396 (pdf_to_json.py:60) - INFO: Started to read from Data/Resumes
-2025-05-01 22:47:47,396 (pdf_to_json.py:36) - INFO: Deleted old files from /Users/lld/Desktop/Ecole/SciencesPo/S2/biases_in_AI/group-project/resume_biases-analysis/code/cv_job_parsing/Data/Processed/Resumes
-2025-05-01 22:47:47,396 (pdf_to_json.py:71) - INFO: Reading from Data/Resumes is now complete.
-2025-05-01 22:47:47,396 (pdf_to_json.py:82) - INFO: Started parsing the resumes.
-2025-05-01 22:47:49,633 (core.py:65) - INFO: loaded 'en_core_web_md' spaCy language pipeline
-2025-05-01 22:47:49,941 (pdf_to_json.py:86) - INFO: Parsing of the resumes is now complete.
-2025-05-01 22:47:49,941 (pdf_to_json.py:88) - INFO: Started to read from Data/JobDescription
-2025-05-01 22:47:49,942 (pdf_to_json.py:36) - INFO: Deleted old files from /Users/lld/Desktop/Ecole/SciencesPo/S2/biases_in_AI/group-project/resume_biases-analysis/code/cv_job_parsing/Data/Processed/JobDescription
-2025-05-01 22:47:49,942 (pdf_to_json.py:99) - INFO: Reading from Data/JobDescription is now complete.
-2025-05-01 22:47:49,942 (pdf_to_json.py:112) - INFO: Started parsing the Job Descriptions.
-2025-05-01 22:47:50,762 (pdf_to_json.py:116) - INFO: Parsing of the Job Descriptions is now complete.
-2025-05-01 22:47:50,762 (pdf_to_json.py:117) - INFO: Success now run `streamlit run streamlit_second.py`
-2025-05-01 22:47:50,765 (get_score.py:128) - INFO: Started getting similarity score
-2025-05-01 22:47:52,175 (get_score.py:142) - INFO: Finished getting similarity score
+2025-05-01 22:54:56,679 (pdf_to_json.py:60) - INFO: Started to read from Data/Resumes
+2025-05-01 22:54:56,680 (pdf_to_json.py:36) - INFO: Deleted old files from /Users/lld/Desktop/Ecole/SciencesPo/S2/biases_in_AI/group-project/resume_biases-analysis/code/cv_job_parsing/Data/Processed/Resumes
+2025-05-01 22:54:56,680 (pdf_to_json.py:71) - INFO: Reading from Data/Resumes is now complete.
+2025-05-01 22:54:56,680 (pdf_to_json.py:82) - INFO: Started parsing the resumes.
+2025-05-01 22:54:59,076 (core.py:65) - INFO: loaded 'en_core_web_md' spaCy language pipeline
+2025-05-01 22:55:15,014 (pdf_to_json.py:86) - INFO: Parsing of the resumes is now complete.
+2025-05-01 22:55:15,014 (pdf_to_json.py:88) - INFO: Started to read from Data/JobDescription
+2025-05-01 22:55:15,015 (pdf_to_json.py:36) - INFO: Deleted old files from /Users/lld/Desktop/Ecole/SciencesPo/S2/biases_in_AI/group-project/resume_biases-analysis/code/cv_job_parsing/Data/Processed/JobDescription
+2025-05-01 22:55:15,015 (pdf_to_json.py:99) - INFO: Reading from Data/JobDescription is now complete.
+2025-05-01 22:55:15,015 (pdf_to_json.py:112) - INFO: Started parsing the Job Descriptions.
+2025-05-01 22:55:15,898 (pdf_to_json.py:116) - INFO: Parsing of the Job Descriptions is now complete.
+2025-05-01 22:55:15,898 (pdf_to_json.py:117) - INFO: Success now run `streamlit run streamlit_second.py`
+2025-05-01 22:55:15,900 (get_score.py:128) - INFO: Started getting similarity score
+2025-05-01 22:55:17,377 (get_score.py:142) - INFO: Finished getting similarity score
+2025-05-01 22:55:17,380 (get_score.py:128) - INFO: Started getting similarity score
+2025-05-01 22:55:17,797 (get_score.py:142) - INFO: Finished getting similarity score
+2025-05-01 22:55:17,799 (get_score.py:128) - INFO: Started getting similarity score
+2025-05-01 22:55:18,179 (get_score.py:142) - INFO: Finished getting similarity score
+2025-05-01 22:55:18,181 (get_score.py:128) - INFO: Started getting similarity score
+2025-05-01 22:55:18,494 (get_score.py:142) - INFO: Finished getting similarity score
+2025-05-01 22:55:18,496 (get_score.py:128) - INFO: Started getting similarity score
+2025-05-01 22:55:18,822 (get_score.py:142) - INFO: Finished getting similarity score
+2025-05-01 22:55:18,823 (get_score.py:128) - INFO: Started getting similarity score
+2025-05-01 22:55:19,157 (get_score.py:142) - INFO: Finished getting similarity score
+2025-05-01 22:55:19,159 (get_score.py:128) - INFO: Started getting similarity score
+2025-05-01 22:55:19,524 (get_score.py:142) - INFO: Finished getting similarity score
+2025-05-01 22:55:19,526 (get_score.py:128) - INFO: Started getting similarity score
+2025-05-01 22:55:19,878 (get_score.py:142) - INFO: Finished getting similarity score
+2025-05-01 22:55:19,880 (get_score.py:128) - INFO: Started getting similarity score
+2025-05-01 22:55:20,233 (get_score.py:142) - INFO: Finished getting similarity score
+2025-05-01 22:55:20,234 (get_score.py:128) - INFO: Started getting similarity score
+2025-05-01 22:55:20,483 (get_score.py:142) - INFO: Finished getting similarity score
+2025-05-01 22:55:20,484 (get_score.py:128) - INFO: Started getting similarity score
+2025-05-01 22:55:20,835 (get_score.py:142) - INFO: Finished getting similarity score
+2025-05-01 22:55:20,836 (get_score.py:128) - INFO: Started getting similarity score
+2025-05-01 22:55:21,175 (get_score.py:142) - INFO: Finished getting similarity score
+2025-05-01 22:55:21,177 (get_score.py:128) - INFO: Started getting similarity score
+2025-05-01 22:55:21,505 (get_score.py:142) - INFO: Finished getting similarity score
+2025-05-01 22:55:21,507 (get_score.py:128) - INFO: Started getting similarity score
+2025-05-01 22:55:21,852 (get_score.py:142) - INFO: Finished getting similarity score
+2025-05-01 22:55:21,854 (get_score.py:128) - INFO: Started getting similarity score
+2025-05-01 22:55:22,207 (get_score.py:142) - INFO: Finished getting similarity score
