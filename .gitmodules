@@ -1,3 +1,6 @@
 [submodule "code/Resume-Matcher"]
 	path = code/Resume-Matcher
 	url = https://github.com/Lyreck/Resume-Matcher
+[submodule "code/Resume_Matcher"]
+	path = code/Resume_Matcher
+	url = https://github.com/Lyreck/Resume_Matcher
