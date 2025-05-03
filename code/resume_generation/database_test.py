@@ -1,3 +1,4 @@
+## Import 
 import pandas as pd 
 import numpy as np
 import re 
@@ -5,26 +6,55 @@ import re
 data_cv=pd.read_csv('data_decoding.csv')
 data_desc=pd.read_csv('description_offers.csv')
 
+
+
+
 #creating database only with job descriptions and only with volunteering decriptions 
  #separation at line 112 
 
-volunteering_desc = data_desc[data_desc['description'].str.contains("volunteering experience", case=False, na=False)]
-experience_desc = data_desc[~data_desc['description'].str.contains("Job Experience", case=False, na=False)]
+
+experience_desc = data_desc[data_desc['description'].str.contains("Job Experience", case=False, na=False)]
+#print(experience_desc)
+
+#creating experience database - column from med_comp, tech_comp and educ_comp columns 
+
+comp_columns = ['tech_comp', 'med_comp', 'educ_comp']
+
+experience_type = data_cv.melt(
+    id_vars=['name', 'surname'],  # on ne garde que les colonnes à transformer
+    value_vars=comp_columns,
+    var_name='comp_type',
+    value_name='company'
+).dropna(subset=['company']) 
+#droping unused columns 
+experience_type = experience_type.drop(columns= ['name', 'surname'])
+#deleting all the lines that are empty in the company column
+experience_type.dropna(subset=['company'], inplace=True)
+
+#deleting all the lines that contain NONE in the company column
+experience_type = experience_type[~experience_type['company'].str.contains("NONE", case=False, na=False)]
+
+#print(experience_type)
 
 
-#parsing job descriptions in the database : 
+#merging experience and experience_desc databases 
 
-def parse_description(desc):
-    lines = desc.split("  - ")
-    # Enlever les étoiles et blancs
-    title = re.sub(r"\*\*", "", lines[0]).strip() if len(lines) > 0 else None
-    position = re.sub(r"\*\*", "", lines[1]).strip() if len(lines) > 1 else None
-    tasks = [line.strip() for line in lines[2:]] if len(lines) > 2 else []
-    return pd.Series([title, position, tasks])
+experience = pd.merge( experience_type, experience_desc, left_on='company', right_on= 'comp_name', how='outer')
+experience.drop_duplicates(subset=['nb'], inplace=True) 
 
-# Appliquer à la colonne
-experience_desc[['job_title', 'job_position', 'task_list']] = data_desc['description'].apply(parse_description)
-print(experience_desc['job_position'])
+#deleting columns that are not useful anymore and renaming columns for clarity
+experience = experience.drop(columns = ['nb', 'company'])
+experience = experience.rename(columns={ "description": "job_desc"})
+#print(experience)
+
+#creating volunteering database 
+volunteering = data_desc[data_desc['description'].str.contains("volunteering experience", case=False, na=False)]
+volunteering= volunteering.drop(columns = ['nb'])
+#renaming columns for clarity 
+volunteering = volunteering.rename(columns={"comp_name": "association", "description": "vol_desc"})
+
+
+
 #creating names and demogrphics database  
 
 data_names = data_cv[['name', 'surname', 'british','gender']]
@@ -36,20 +66,20 @@ data_names['surname'] = data_names['surname'].str.capitalize()
 #print(data_names.head())
 
 
-#creating experience database - column from med_comp, tech_comp and educ_comp columns 
+#joining final database : names, demographics experience and volunteering : 
+#creating all the possible combinations 
+data_name_exp = data_names.merge(volunteering, how = "cross")
+data_for_generation = data_name_exp.merge(experience, how ='cross')
 
-comp_columns = ['tech_comp', 'med_comp', 'educ_comp']
+#adding field of study column, where when it is comp_type = 'educ_comp' we add field of study = 'Liberal Arts', 
+#when it is 'tech_comp' we add field of study = 'Computer Science', and when it is 'med_comp' we add field of study = 'Medicine'
+data_for_generation['field_of_study'] = np.where(data_for_generation['comp_type'] == 'educ_comp', 'Liberal Arts',
+                                        np.where(data_for_generation['comp_type'] == 'tech_comp', 'Computer Science',
+                                                 np.where(data_for_generation['comp_type'] == 'med_comp', 'Medicine', None)))
 
-experience = data_cv.melt(
-    id_vars=[],  # on ne garde que les colonnes à transformer
-    value_vars=comp_columns,
-    var_name='comp_type',
-    value_name='comp_name'
-).dropna(subset=['comp_name'])  # on enlève les lignes où comp_name est NaN
+#exporting the database in csv format 
+print(data_for_generation.head())
+print(data_for_generation.columns)
 
-#creating volunteering experience database : 
-volunteering = data_cv
 
-#
-
-"""
+data_for_generation.to_csv('database_all_combination.csv', index=False)
