@@ -113,7 +113,7 @@ LinkedIn: linkedin.com/in/{people[0]}{people[1]}"""
 if __name__ == "__main__":
 
     names = pd.read_csv("data/names_clean.csv", 
-                    names=["Name", "Surname", "Associations", "Gender", "Tech_comp", "Med_comp", "Edu_comp", "field_of_study", "University"])
+                    names=["Name", "Surname", "Associations", "Gender", "Tech_comp", "Med_comp", "Edu_comp"])
 
     people = names[["Name", "Surname", "Gender"]].dropna()#.to_list()
     associations = names[["Associations"]].dropna()#.to_list()
