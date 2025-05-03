@@ -44,25 +44,23 @@ def insert_descriptions_to_pdf(name, company, association, field_of_study, out_d
           {{''' + f"{company_name}" + r'''}}{{}}
           \resumeItemListStart
           '''
-
     for item in items: 
       company_section += r'''\resumeItem{{''' + f"{item} " + r'''}}
       '''
-
     company_section += r'''\resumeItemListEnd''' #end the company section
     
+
     ############## Association Section ##############
     #pre-process LLM-generated markdown description
     association_name, items = process_markdown_association(association)
     association_section = r''' \resumeProjectHeading{{ \textbf{{''' + f'{association_name}' + r'''}} }}{{June 2020 -- Present}}
               \resumeItemListStart
               '''
-    
     for item in items:
       association_section += r'''\resumeItem{{''' + f"{item} " + r'''}}
       '''
-    
     association_section += r'''\resumeItemListEnd'''
+
 
     ## open tex template
     with open ("data/tex_template.tex", "r") as f:
