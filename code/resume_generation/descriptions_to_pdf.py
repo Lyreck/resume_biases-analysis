@@ -3,260 +3,355 @@
 ### We also generate a hash for each pdf file for quck identification, as well as create databases to make our analysis. ###########################
 
 
+## We're changing:
+# Name
+# email adress, linkedin, github
+# professional experience
+# volunteering experience
+# changing "%" in "\%" when % does not start a line
 
 
+from utils.double_placeholders import double_placeholders
+from utils.process_percentages import escape_percent_in_tex
+from utils.process_markdown_description import process_markdown_job, process_markdown_association
+import os
+import subprocess
 
-
-def insert_descriptions_to_tex(name, company, association, gender):
+def insert_descriptions_to_tex(name, company, association, field_of_study, out_directory="data/generated_resumes"): 
     """
+    docstring
+    Outputs by default the .pdf resume in the data/generated_resumes directory (subject to change in the future).
     """
 
-    template = r'''%-------------------------
-% Resume in Latex
-% Author : Jake Gutierrez
-% Based off of: https://github.com/sb2nov/resume
-% License : MIT
-%------------------------
-
-\documentclass[letterpaper,11pt]{article}
-
-\usepackage{latexsym}
-\usepackage[empty]{fullpage}
-\usepackage{titlesec}
-\usepackage{marvosym}
-\usepackage[usenames,dvipsnames]{color}
-\usepackage{verbatim}
-\usepackage{enumitem}
-\usepackage[hidelinks]{hyperref}
-\usepackage{fancyhdr}
-\usepackage[english]{babel}
-\usepackage{tabularx}
-\input{glyphtounicode}
+    email = f"{name}@gmail.com"
+    linkedin = f"linkedin.com/in/{name}"
+    github = f"github.com/{name}"
 
 
-%----------FONT OPTIONS----------
-% sans-serif
-% \usepackage[sfdefault]{FiraSans}
-% \usepackage[sfdefault]{roboto}
-% \usepackage[sfdefault]{noto-sans}
-% \usepackage[default]{sourcesanspro}
+    ############## Education Section ############ 
+    university, location, fieldofstudy = "University of Southampton", "Southampton", field_of_study
+    # university, location, field_of_study = process_markdown_education(education) #cmd + SHIFT + : pour décommenter les lignes.
+    education_section = r'''\resumeSubheading
+          {{''' + f"{university}" + r'''}}{{''' + f"{location}" + r'''}}
+          {{Bachelor in ''' + f"{fieldofstudy}" + r'''}}{{Aug. 2018 -- May 2021}}
+          '''
 
-% serif
-% \usepackage{CormorantGaramond}
-% \usepackage{charter}
+    print(education_section)
 
-
-\pagestyle{fancy}
-\fancyhf{} % clear all header and footer fields
-\fancyfoot{}
-\renewcommand{\headrulewidth}{0pt}
-\renewcommand{\footrulewidth}{0pt}
-
-% Adjust margins
-\addtolength{\oddsidemargin}{-0.5in}
-\addtolength{\evensidemargin}{-0.5in}
-\addtolength{\textwidth}{1in}
-\addtolength{\topmargin}{-.5in}
-\addtolength{\textheight}{1.0in}
-
-\urlstyle{same}
-
-\raggedbottom
-\raggedright
-\setlength{\tabcolsep}{0in}
-
-% Sections formatting
-\titleformat{\section}{
-  \vspace{-4pt}\scshape\raggedright\large
-}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
-
-% Ensure that generate pdf is machine readable/ATS parsable
-\pdfgentounicode=1
-
-%-------------------------
-% Custom commands
-\newcommand{\resumeItem}[1]{
-  \item\small{
-    {#1 \vspace{-2pt}}
-  }
-}
-
-\newcommand{\resumeSubheading}[4]{
-  \vspace{-2pt}\item
-    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
-      \textbf{#1} & #2 \\
-      \textit{\small#3} & \textit{\small #4} \\
-    \end{tabular*}\vspace{-7pt}
-}
-
-\newcommand{\resumeSubSubheading}[2]{
-    \item
-    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
-      \textit{\small#1} & \textit{\small #2} \\
-    \end{tabular*}\vspace{-7pt}
-}
-
-\newcommand{\resumeProjectHeading}[2]{
-    \item
-    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
-      \small#1 & #2 \\
-    \end{tabular*}\vspace{-7pt}
-}
-
-\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
-
-\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
-
-\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
-\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
-\newcommand{\resumeItemListStart}{\begin{itemize}}
-\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
-
-%-------------------------------------------
-%%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-\begin{document}
-
-%----------HEADING----------
-% \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
-%   \textbf{\href{http://sourabhbajaj.com/}{\Large Sourabh Bajaj}} & Email : \href{mailto:sourabh@sourabhbajaj.com}{sourabh@sourabhbajaj.com}\\
-%   \href{http://sourabhbajaj.com/}{http://www.sourabhbajaj.com} & Mobile : +1-123-456-7890 \\
-% \end{tabular*}
-
-\begin{center}
-    \textbf{\Huge \scshape Jake Ryan} \\ \vspace{1pt}
-    \small 123-456-7890 $|$ \href{mailto:x@x.com}{\underline{jake@su.edu}} $|$ 
-    \href{https://linkedin.com/in/...}{\underline{linkedin.com/in/jake}} $|$
-    \href{https://github.com/...}{\underline{github.com/jake}}
-\end{center}
-
-
-%-----------EDUCATION-----------
-\section{Education}
-  \resumeSubHeadingListStart
-    \resumeSubheading
-      {Southwestern University}{Georgetown, TX}
-      {Bachelor of Arts in Computer Science, Minor in Business}{Aug. 2018 -- May 2021}
-    \resumeSubheading
-      {Blinn College}{Bryan, TX}
-      {Associate's in Liberal Arts}{Aug. 2014 -- May 2018}
-  \resumeSubHeadingListEnd
-
-
-%-----------EXPERIENCE-----------
-\section{Experience}
-  \resumeSubHeadingListStart
-
-    \resumeSubheading
-      {Undergraduate Research Assistant}{June 2020 -- Present}
-      {Texas A\&M University}{College Station, TX}
-      \resumeItemListStart
-        \resumeItem{Developed a REST API using FastAPI and PostgreSQL to store data from learning management systems}
-        \resumeItem{Developed a full-stack web application using Flask, React, PostgreSQL and Docker to analyze GitHub data}
-        \resumeItem{Explored ways to visualize GitHub collaboration in a classroom setting}
-      \resumeItemListEnd
-      
-% -----------Multiple Positions Heading-----------
-%    \resumeSubSubheading
-%     {Software Engineer I}{Oct 2014 - Sep 2016}
-%     \resumeItemListStart
-%        \resumeItem{Apache Beam}
-%          {Apache Beam is a unified model for defining both batch and streaming data-parallel processing pipelines}
-%     \resumeItemListEnd
-%    \resumeSubHeadingListEnd
-%-------------------------------------------
-
-    \resumeSubheading
-      {Information Technology Support Specialist}{Sep. 2018 -- Present}
-      {Southwestern University}{Georgetown, TX}
-      \resumeItemListStart
-        \resumeItem{Communicate with managers to set up campus computers used on campus}
-        \resumeItem{Assess and troubleshoot computer problems brought by students, faculty and staff}
-        \resumeItem{Maintain upkeep of computers, classroom equipment, and 200 printers across campus}
-    \resumeItemListEnd
-
-    \resumeSubheading
-      {Artificial Intelligence Research Assistant}{May 2019 -- July 2019}
-      {Southwestern University}{Georgetown, TX}
-      \resumeItemListStart
-        \resumeItem{Explored methods to generate video game dungeons based off of \emph{The Legend of Zelda}}
-        \resumeItem{Developed a game in Java to test the generated dungeons}
-        \resumeItem{Contributed 50K+ lines of code to an established codebase via Git}
-        \resumeItem{Conducted  a human subject study to determine which video game dungeon generation technique is enjoyable}
-        \resumeItem{Wrote an 8-page paper and gave multiple presentations on-campus}
-        \resumeItem{Presented virtually to the World Conference on Computational Intelligence}
-      \resumeItemListEnd
-
-  \resumeSubHeadingListEnd
-
-
-%-----------PROJECTS-----------
-\section{Projects}
-    \resumeSubHeadingListStart
-      \resumeProjectHeading
-          {\textbf{Gitlytics} $|$ \emph{Python, Flask, React, PostgreSQL, Docker}}{June 2020 -- Present}
+    ############## Company Section ##############
+    #pre-process LLM-generated markdown description
+    title, company_name, items = process_markdown_job(company)
+    company_section = r'''\resumeSubheading{{''' + f"{title}" + r'''}}{{June 2020 -- Present}}
+          {{''' + f"{company_name}" + r'''}}{{}}
           \resumeItemListStart
-            \resumeItem{Developed a full-stack web application using with Flask serving a REST API with React as the frontend}
-            \resumeItem{Implemented GitHub OAuth to get data from user’s repositories}
-            \resumeItem{Visualized GitHub data to show collaboration}
-            \resumeItem{Used Celery and Redis for asynchronous tasks}
-          \resumeItemListEnd
-      \resumeProjectHeading
-          {\textbf{Simple Paintball} $|$ \emph{Spigot API, Java, Maven, TravisCI, Git}}{May 2018 -- May 2020}
+          '''
+
+    for item in items: 
+      company_section += r'''\resumeItem{{''' + f"{item} " + r'''}}
+      '''
+
+    company_section += r'''\resumeItemListEnd''' #end the company section
+    
+    ############## Association Section ##############
+    #pre-process LLM-generated markdown description
+    association_name, items = process_markdown_association(association)
+    association_section = r''' \resumeProjectHeading{{ \textbf{{''' + f'{association_name}' + r'''}} }}{{June 2020 -- Present}}
+              \resumeItemListStart
+              '''
+    
+    for item in items:
+      association_section += r'''\resumeItem{{''' + f"{item} " + r'''}}
+      '''
+    
+    association_section += r'''\resumeItemListEnd'''
+
+    ## open tex template
+    with open ("tex_template.tex", "r") as f:
+      tex_template = f.read() #processed file with process_tex_string.
+
+    #Replace placeholders {name}, {email}, {association}, etc.. with actual values
+    latex_code = tex_template.format(name=name, 
+                                     email=email, 
+                                     linkedin=linkedin, 
+                                     github=github, 
+                                     company=company_section, 
+                                     association=association_section,
+                                     education=education_section)
+    
+    # Write the LaTeX code to a .tex file
+    tex_filename = "output_resume.tex"
+    with open(tex_filename, "w") as tex_file:
+        tex_file.write(latex_code)
+
+    # Compile the .tex file into a PDF using pdflatex
+    try:
+        subprocess.run(["pdflatex", tex_filename], check=True) # with error messages
+        # with open(os.devnull, 'w') as devnull: #without error messages (to avoid some warnings)
+        #     subprocess.run(
+        #         ["pdflatex", tex_filename],
+        #         stdout=devnull,  # Suppress standard output
+        #         stderr=devnull,  # Suppress error output
+        #         check=True
+        #     )
+        print(f"PDF generated successfully: {os.path.splitext(tex_filename)[0]}.pdf")
+    except subprocess.CalledProcessError as e:
+        print(f"Error during PDF generation: {e}")
+
+    # Clean up auxiliary files generated by pdflatex
+    for ext in [".aux", ".log"]:
+        aux_file = f"{os.path.splitext(tex_filename)[0]}{ext}"
+        if os.path.exists(aux_file):
+            os.remove(aux_file)
+
+
+
+def process_tex_string(tex_string):
+    """
+    Process the LaTeX string to escape special characters and double curly braces.
+    """
+    # Escape percent signs
+    tex_string = escape_percent_in_tex(tex_string)
+    
+    # Double curly braces
+    tex_string = double_placeholders(tex_string)
+    
+    return tex_string
+
+
+
+if __name__ == "__main__":
+    tex_template = r'''%-------------------------
+    % Resume in Latex
+    % Author : Jake Gutierrez
+    % Based off of: https://github.com/sb2nov/resume
+    % License : MIT
+    %------------------------
+
+    \documentclass[letterpaper,11pt]{article}
+
+    \usepackage{latexsym}
+    \usepackage[empty]{fullpage}
+    \usepackage{titlesec}
+    \usepackage{marvosym}
+    \usepackage[usenames,dvipsnames]{color}
+    \usepackage{verbatim}
+    \usepackage{enumitem}
+    \usepackage[hidelinks]{hyperref}
+    \usepackage{fancyhdr}
+    \usepackage[english]{babel}
+    \usepackage{tabularx}
+    \input{glyphtounicode}
+
+
+    %----------FONT OPTIONS----------
+    % sans-serif
+    % \usepackage[sfdefault]{FiraSans}
+    % \usepackage[sfdefault]{roboto}
+    % \usepackage[sfdefault]{noto-sans}
+    % \usepackage[default]{sourcesanspro}
+
+    % serif
+    % \usepackage{CormorantGaramond}
+    % \usepackage{charter}
+
+
+    \pagestyle{fancy}
+    \fancyhf{} % clear all header and footer fields
+    \fancyfoot{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0pt}
+
+    % Adjust margins
+    \addtolength{\oddsidemargin}{-0.5in}
+    \addtolength{\evensidemargin}{-0.5in}
+    \addtolength{\textwidth}{1in}
+    \addtolength{\topmargin}{-.5in}
+    \addtolength{\textheight}{1.0in}
+
+    \urlstyle{same}
+
+    \raggedbottom
+    \raggedright
+    \setlength{\tabcolsep}{0in}
+
+    % Sections formatting
+    \titleformat{\section}{
+      \vspace{-4pt}\scshape\raggedright\large
+    }{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+    % Ensure that generate pdf is machine readable/ATS parsable
+    \pdfgentounicode=1
+
+    %-------------------------
+    % Custom commands
+    \newcommand{\resumeItem}[1]{
+      \item\small{
+        {#1 \vspace{-2pt}}
+      }
+    }
+
+    \newcommand{\resumeSubheading}[4]{
+      \vspace{-2pt}\item
+        \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+          \textbf{#1} & #2 \\
+          \textit{\small#3} & \textit{\small #4} \\
+        \end{tabular*}\vspace{-7pt}
+    }
+
+    \newcommand{\resumeSubSubheading}[2]{
+        \item
+        \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+          \textit{\small#1} & \textit{\small #2} \\
+        \end{tabular*}\vspace{-7pt}
+    }
+
+    \newcommand{\resumeProjectHeading}[2]{
+        \item
+        \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+          \small#1 & #2 \\
+        \end{tabular*}\vspace{-7pt}
+    }
+
+    \newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
+
+    \renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+    \newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+    \newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+    \newcommand{\resumeItemListStart}{\begin{itemize}}
+    \newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+    %-------------------------------------------
+    %%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+    \begin{document}
+
+    %----------HEADING----------
+    % \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
+    %   \textbf{\href{http://sourabhbajaj.com/}{\Large Sourabh Bajaj}} & Email : \href{mailto:sourabh@sourabhbajaj.com}{sourabh@sourabhbajaj.com}\\
+    %   \href{http://sourabhbajaj.com/}{http://www.sourabhbajaj.com} & Mobile : +1-123-456-7890 \\
+    % \end{tabular*}
+
+    \begin{center}
+        \textbf{\Huge \scshape Jake Ryan} \\ \vspace{1pt}
+        \small 123-456-7890 $|$ \href{mailto:x@x.com}{\underline{jake@su.edu}} $|$ 
+        \href{https://linkedin.com/in/...}{\underline{linkedin.com/in/jake}} $|$
+        \href{https://github.com/...}{\underline{github.com/jake}}
+    \end{center}
+
+
+    %-----------EDUCATION-----------
+    \section{Education}
+      \resumeSubHeadingListStart
+        \resumeSubheading
+          {Southwestern University}{Georgetown, TX}
+          {Bachelor of Arts in Computer Science, Minor in Business}{Aug. 2018 -- May 2021}
+        \resumeSubheading
+          {Blinn College}{Bryan, TX}
+          {Associate's in Liberal Arts}{Aug. 2014 -- May 2018}
+      \resumeSubHeadingListEnd
+
+
+    %-----------EXPERIENCE-----------
+    \section{Experience}
+      \resumeSubHeadingListStart
+
+        \resumeSubheading
+          {Undergraduate Research Assistant}{June 2020 -- Present}
+          {Texas A\&M University}{College Station, TX}
           \resumeItemListStart
-            \resumeItem{Developed a Minecraft server plugin to entertain kids during free time for a previous job}
-            \resumeItem{Published plugin to websites gaining 2K+ downloads and an average 4.5/5-star review}
-            \resumeItem{Implemented continuous delivery using TravisCI to build the plugin upon new a release}
-            \resumeItem{Collaborated with Minecraft server administrators to suggest features and get feedback about the plugin}
+            \resumeItem{Developed a REST API using FastAPI and PostgreSQL to store data from learning management systems}
+            \resumeItem{Developed a full-stack web application using Flask, React, PostgreSQL and Docker to analyze GitHub data}
+            \resumeItem{Explored ways to visualize GitHub collaboration in a classroom setting}
           \resumeItemListEnd
-    \resumeSubHeadingListEnd
+          
+    % -----------Multiple Positions Heading-----------
+    %    \resumeSubSubheading
+    %     {Software Engineer I}{Oct 2014 - Sep 2016}
+    %     \resumeItemListStart
+    %        \resumeItem{Apache Beam}
+    %          {Apache Beam is a unified model for defining both batch and streaming data-parallel processing pipelines}
+    %     \resumeItemListEnd
+    %    \resumeSubHeadingListEnd
+    %-------------------------------------------
+
+        \resumeSubheading
+          {Information Technology Support Specialist}{Sep. 2018 -- Present}
+          {Southwestern University}{Georgetown, TX}
+          \resumeItemListStart
+            \resumeItem{Communicate with managers to set up campus computers used on campus}
+            \resumeItem{Assess and troubleshoot computer problems brought by students, faculty and staff}
+            \resumeItem{Maintain upkeep of computers, classroom equipment, and 200 printers across campus}
+        \resumeItemListEnd
+
+        \resumeSubheading
+          {Artificial Intelligence Research Assistant}{May 2019 -- July 2019}
+          {Southwestern University}{Georgetown, TX}
+          \resumeItemListStart
+            \resumeItem{Explored methods to generate video game dungeons based off of \emph{The Legend of Zelda}}
+            \resumeItem{Developed a game in Java to test the generated dungeons}
+            \resumeItem{Contributed 50K+ lines of code to an established codebase via Git}
+            \resumeItem{Conducted  a human subject study to determine which video game dungeon generation technique is enjoyable}
+            \resumeItem{Wrote an 8-page paper and gave multiple presentations on-campus}
+            \resumeItem{Presented virtually to the World Conference on Computational Intelligence}
+          \resumeItemListEnd
+
+      \resumeSubHeadingListEnd
+
+
+    %-----------PROJECTS-----------
+    \section{Projects}
+        \resumeSubHeadingListStart
+          \resumeProjectHeading
+              {\textbf{Gitlytics} $|$ \emph{Python, Flask, React, PostgreSQL, Docker}}{June 2020 -- Present}
+              \resumeItemListStart
+                \resumeItem{Developed a full-stack web application using with Flask serving a REST API with React as the frontend}
+                \resumeItem{Implemented GitHub OAuth to get data from user’s repositories}
+                \resumeItem{Visualized GitHub data to show collaboration}
+                \resumeItem{Used Celery and Redis for asynchronous tasks}
+              \resumeItemListEnd
+          \resumeProjectHeading
+              {\textbf{Simple Paintball} $|$ \emph{Spigot API, Java, Maven, TravisCI, Git}}{May 2018 -- May 2020}
+              \resumeItemListStart
+                \resumeItem{Developed a Minecraft server plugin to entertain kids during free time for a previous job}
+                \resumeItem{Published plugin to websites gaining 2K+ downloads and an average 4.5/5-star review}
+                \resumeItem{Implemented continuous delivery using TravisCI to build the plugin upon new a release}
+                \resumeItem{Collaborated with Minecraft server administrators to suggest features and get feedback about the plugin}
+              \resumeItemListEnd
+        \resumeSubHeadingListEnd
 
 
 
-%
-%-----------PROGRAMMING SKILLS-----------
-\section{Technical Skills}
- \begin{itemize}[leftmargin=0.15in, label={}]
-    \small{\item{
-     \textbf{Languages}{: Java, Python, C/C++, SQL (Postgres), JavaScript, HTML/CSS, R} \\
-     \textbf{Frameworks}{: React, Node.js, Flask, JUnit, WordPress, Material-UI, FastAPI} \\
-     \textbf{Developer Tools}{: Git, Docker, TravisCI, Google Cloud Platform, VS Code, Visual Studio, PyCharm, IntelliJ, Eclipse} \\
-     \textbf{Libraries}{: pandas, NumPy, Matplotlib}
-    }}
- \end{itemize}
+      %
+      %-----------PROGRAMMING SKILLS-----------
+      %\section{Technical Skills}
+      % \begin{itemize}[leftmargin=0.15in, label={}]
+      %    \small{\item{
+      %     \textbf{Languages}{: Java, Python, C/C++, SQL (Postgres), JavaScript, HTML/CSS, R} \\
+      %     \textbf{Frameworks}{: React, Node.js, Flask, JUnit, WordPress, Material-UI, FastAPI} \\
+      %     \textbf{Developer Tools}{: Git, Docker, TravisCI, Google Cloud Platform, VS Code, Visual Studio, PyCharm, IntelliJ, Eclipse} \\
+      %     \textbf{Libraries}{: pandas, NumPy, Matplotlib}
+      %    }}
+      % \end{itemize}
 
 
-%-------------------------------------------
-\end{document}'''
-
-r'''%-------------------------------------------
-%%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-\begin{document}
-
-%----------HEADING----------
-% \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
-%   \textbf{\href{http://sourabhbajaj.com/}{\Large Sourabh Bajaj}} & Email : \href{mailto:sourabh@sourabhbajaj.com}{sourabh@sourabhbajaj.com}\\
-%   \href{http://sourabhbajaj.com/}{http://www.sourabhbajaj.com} & Mobile : +1-123-456-7890 \\
-% \end{tabular*}
-
-\begin{center}
-    \textbf{\Huge \scshape Jake Ryan} \\ \vspace{1pt}
-    \small 123-456-7890 $|$ \href{mailto:x@x.com}{\underline{jake@su.edu}} $|$ 
-    \href{https://linkedin.com/in/...}{\underline{linkedin.com/in/jake}} $|$
-    \href{https://github.com/...}{\underline{github.com/jake}}
-\end{center}
+      %-------------------------------------------
+      \end{document}'''
+    
+    ## Pre processing of the original tex file (change {} into {{}} and % into \%)
+    preprocess = False #this needs to be run only once.
+    if preprocess:
+      tex_template = process_tex_string(tex_template)
+      with open("tex_template.tex", "w") as f:
+          f.write(tex_template)
 
 
-%-----------EDUCATION-----------
-\section{Education}
-  \resumeSubHeadingListStart
-    \resumeSubheading
-      {Southwestern University}{Georgetown, TX}
-      {Bachelor of Arts in Computer Science, Minor in Business}{Aug. 2018 -- May 2021}
-    \resumeSubheading
-      {Blinn College}{Bryan, TX}
-      {Associate's in Liberal Arts}{Aug. 2014 -- May 2018}
-  \resumeSubHeadingListEnd'''
+    # Example usage to generate a Resume with given name, company expereince and assocation descriptions.
+    name = "Jake Ryan"
+    company = "**Job Experience**  - **Senior Software Engineer at Dyson**   - Developed and maintained software solutions for Dyson's innovative products, focusing on embedded systems and IoT technologies.  - Collaborated with cross-functional teams to integrate hardware and software components seamlessly.  - Implemented agile methodologies to ensure timely delivery of high-quality software updates.  -  Conducted thorough testing and debugging to enhance product performance and reliability.  - Contributed to the development of user-friendly interfaces and intuitive control systems for Dyson's smart home devices. "
+    association = "**Volunteering Experience at African Impact** - Dedicated over 100 hours to African Impact, a leading volunteer organization in Africa. - Assisted in community development projects, including education and conservation efforts. - Collaborated with local teams to implement sustainable initiatives that positively impacted rural communities. - Facilitated educational workshops for children, enhancing their learning experiences and fostering a love for education. - Participated in environmental conservation activities such as tree planting and beach clean-ups, promoting ecological sustainability. - Engaged with diverse cultural groups, gaining valuable insights into African traditions and lifestyles while contributing to meaningful community projects. "
+    field_of_study = "Computer Science"
+    #generate resume in .pdf format
+    insert_descriptions_to_tex(name, company, association, field_of_study)
+    
