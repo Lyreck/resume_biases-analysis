@@ -5,5 +5,6 @@
 # 2. JobDesc Name, .... ??? + key
 # 3. CV Name, Education Sector, .... (genre mettre dans la database toutes les infos importantes du CV) + key
 
+from descriptions_to_pdf import insert_descriptions_to_pdf
 
 
