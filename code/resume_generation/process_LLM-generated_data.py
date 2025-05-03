@@ -1,16 +1,5 @@
 import pandas as pd
 
-names = pd.read_csv("data/names_clean.csv", 
-                    names=["Name", "Surname", "Associations", "Gender", "Tech_comp", "Med_comp", "Edu_comp"])
-
-
-associations = names["Associations"].dropna().drop_duplicates().tolist()
-comps_tech = names["Tech_comp"].dropna().drop_duplicates().tolist()#.to_list()
-comps_med = names["Med_comp"].dropna().drop_duplicates().tolist()#.to_list()
-comps_edu = names["Edu_comp"].dropna().drop_duplicates().tolist()#.to_list()
-
-print(associations + comps_edu + comps_tech + comps_med)
-
 def process_file(input_file, output_file, keywords):
     """
     Processes a file by putting all content on a single line and creating a newline
@@ -40,14 +29,26 @@ def process_file(input_file, output_file, keywords):
     with open(output_file, "w", encoding="utf-8") as outfile:
         outfile.write(processed_data.strip())
 
-# Example usage
-input_file = "out_files/out2.csv"  # Replace with the path to your input file
-output_file = "out_files/processed.csv"  # Replace with the desired output path
-keywords = associations + comps_edu + comps_tech + comps_med  # Replace with your list of keywords
-process_file(input_file, output_file, keywords)
+
+if __name__ == "__main__":
+    names = pd.read_csv("data/names_clean.csv", 
+                    names=["Name", "Surname", "Associations", "Gender", "Tech_comp", "Med_comp", "Edu_comp"])
+
+    associations = names["Associations"].dropna().drop_duplicates().tolist()
+    comps_tech = names["Tech_comp"].dropna().drop_duplicates().tolist()#.to_list()
+    comps_med = names["Med_comp"].dropna().drop_duplicates().tolist()#.to_list()
+    comps_edu = names["Edu_comp"].dropna().drop_duplicates().tolist()#.to_list()
+
+    print(associations + comps_edu + comps_tech + comps_med)
+    
+    # Example usage
+    input_file = "out_files/out2.csv"  # Replace with the path to your input file
+    output_file = "out_files/processed.csv"  # Replace with the desired output path
+    keywords = associations + comps_edu + comps_tech + comps_med  # Replace with your list of keywords
+    process_file(input_file, output_file, keywords)
 
 
-df = pd.read_csv(output_file, sep=";", header=None)
-df.columns= ["Experience", "Description"]
-print(df.head())
-df.to_excel("out_files/processed.xlsx", index=False)
+    df = pd.read_csv(output_file, sep=";", header=None)
+    df.columns= ["Experience", "Description"]
+    print(df.head())
+    df.to_excel("out_files/processed.xlsx", index=False)

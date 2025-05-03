@@ -14,15 +14,27 @@ import re
 
 def process_markdown_job(experience_description):
     # Extract title and company
-    title_company_match = re.search(r"\*\*(.*?)\*\*.*?\*\*(.*?)\*\*", experience_description)
+    experience_description = experience_description[18:] # Remove the first 18 Characters; "**Job Experience**"
+    print(experience_description)
+    title_company_match = re.search(r"\*\*(.*?)\*\*", experience_description)
     if not title_company_match:
         raise ValueError("Title and company not found in the description")
     title = title_company_match.group(1).strip()
-    company = title_company_match.group(2).strip()
+
+    # Split the content into title and company using " at "
+    if " at " not in title:
+        raise ValueError("Expected ' at ' separator between title and company")
+    
+    title, company = title.split(" at ", 1)
+    title = title.strip()
+    company = company.strip()
+    # company = title_company_match.group(2).strip()
 
     # Extract bullet points
     items = re.findall(r"- (.*?)(?=  -|$)", experience_description)
     items = [item.strip() for item in items]
+    # Remove the first item, which is the title and company
+    items = items[1:] if len(items) > 1 else []
 
     return title, company, items
 
