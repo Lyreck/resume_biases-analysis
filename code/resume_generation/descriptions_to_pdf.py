@@ -23,9 +23,9 @@ def insert_descriptions_to_pdf(name, company, association, field_of_study, out_d
     Outputs by default the .pdf resume in the data/generated_resumes directory (subject to change in the future).
     """
 
-    email = f"{name}@gmail.com"
-    linkedin = f"linkedin.com/in/{name}"
-    github = f"github.com/{name}"
+    email = f"{'.'.join(name.split())}@gmail.com"
+    linkedin = f"linkedin.com/in/{''.join(name.split())}"
+    github = f"github.com/{''.join(name.split())}"
 
 
     ############## Education Section ############ 

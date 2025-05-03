@@ -15,7 +15,6 @@ import re
 def process_markdown_job(experience_description):
     # Extract title and company
     experience_description = experience_description[18:] # Remove the first 18 Characters; "**Job Experience**"
-    print(experience_description)
     title_company_match = re.search(r"\*\*(.*?)\*\*", experience_description)
     if not title_company_match:
         raise ValueError("Title and company not found in the description")
