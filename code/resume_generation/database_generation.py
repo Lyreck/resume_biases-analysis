@@ -4,13 +4,13 @@ import numpy as np
 import re 
 
 
-def create_resume_database(data_cv, data_desc, to_csv=False):
+def create_resume_database(data_decoding, data_desc, to_csv=False):
     """
-    This function creates a database from the given data_cv and data_desc DataFrames.
+    This function creates a database from the given data_decoding and data_desc DataFrames.
     It processes the data to extract relevant information and combines it into a final DataFrame.
     
     Args:
-        data_cv (pd.DataFrame): DataFrame containing CV data.
+        data_decoding (pd.DataFrame): DataFrame containing CV data.
         data_desc (pd.DataFrame): DataFrame containing job descriptions.
         
     Returns:
@@ -31,7 +31,7 @@ def create_resume_database(data_cv, data_desc, to_csv=False):
 
     comp_columns = ['tech_comp', 'med_comp', 'educ_comp']
 
-    experience_type = data_cv.melt(
+    experience_type = data_decoding.melt(
         id_vars=['name', 'surname'],  # on ne garde que les colonnes à transformer
         value_vars=comp_columns,
         var_name='comp_type',
@@ -68,12 +68,17 @@ def create_resume_database(data_cv, data_desc, to_csv=False):
 
     #creating names and demogrphics database  
 
-    data_names = data_cv[['name', 'surname', 'british','gender']]
+    data_names = data_decoding[['name', 'surname', 'british','gender']].copy()
 
     #capitalizing only first letters of names and surnames 
-
     data_names['name'] = data_names['name'].str.capitalize()
     data_names['surname'] = data_names['surname'].str.capitalize()
+
+    # Change "british" and "gender" to integer
+    
+    data_names['british'] = data_names['british'].astype(int)
+    data_names['gender'] = data_names['gender'].astype(int)
+
     #print(data_names.head())
 
 
@@ -97,10 +102,10 @@ def create_resume_database(data_cv, data_desc, to_csv=False):
 
 if __name__ == "__main__":
     # Example usage
-    data_cv=pd.read_csv('data/data_decoding.csv')
-    data_desc=pd.read_csv('data/description_offers.csv')
+    data_decoding=pd.read_csv('data/data_decoding.csv')
+    data_desc=pd.read_csv('data/data_desc.csv')
 
-    data_for_generation = create_resume_database(data_cv, data_desc, to_csv=False) #this gives us the database.
+    data_for_generation = create_resume_database(data_decoding, data_desc, to_csv=False) #this gives us the database.
 
     #exporting the database in csv format 
     print(data_for_generation.head())

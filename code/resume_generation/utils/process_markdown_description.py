@@ -20,16 +20,21 @@ def process_markdown_job(experience_description):
         raise ValueError("Title and company not found in the description")
     title = title_company_match.group(1).strip()
 
-    # Split the content into title and company using " at "
-    if " at " not in title:
-        raise ValueError("Expected ' at ' separator between title and company")
-    
-    title, company = title.split(" at ", 1)
-    title = title.strip()
-    company = company.strip()
+    try: #if there is a "at", take company name OUT of the job title.
+        # Split the content into title and company using " at "
+        if " at " not in title:
+            raise ValueError("Expected ' at ' separator between title and company")
+        
+        title, company = title.split(" at ", 1)
+        title = title.strip()
+        company = company.strip()
+    except:
+        title = title.strip()
+        company = 'Company not found in job description (no "at" detected).'
     # company = title_company_match.group(2).strip()
 
     # Extract bullet points
+    experience_description = experience_description.replace("%", r"\%") #remove % that would make comments in latex
     items = re.findall(r"- (.*?)(?=  -|$)", experience_description)
     items = [item.strip() for item in items]
     # Remove the first item, which is the title and company
@@ -53,8 +58,9 @@ def process_markdown_association(association):
 
     # Extract bullet points
     #items = re.findall(r"- (.*?)(?=  -|$)", association)
-    items = re.findall(r"- (.*?)(?=\s*-|$)", association, flags=re.DOTALL)
+    association = association.replace("%", r"\%") #remove % that would make comments in latex
 
+    items = re.findall(r"- (.*?)(?=\s*-|$)", association, flags=re.DOTALL)
     items = [item.strip() for item in items]
 
     return association_name, items
