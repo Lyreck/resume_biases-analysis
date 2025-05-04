@@ -43,14 +43,14 @@ def create_resume_database(data_decoding, data_desc, to_csv=False):
     experience_type.dropna(subset=['company'], inplace=True)
 
     #deleting all the lines that contain NONE in the company column
-    experience_type = experience_type[~experience_type['company'].str.contains("NONE", case=False, na=False)]
+    experience_type = experience_type[~experience_type['company'].str.contains("NO PREVIOUS EXPERIENCE", case=False, na=False)]
 
     #print(experience_type)
 
 
     #merging experience and experience_desc databases 
 
-    experience = pd.merge( experience_type, experience_desc, left_on='company', right_on= 'comp_name', how='outer')
+    experience = pd.merge( experience_type, experience_desc, left_on='company', right_on= 'comp_name', how='left') #outer?
     experience.drop_duplicates(subset=['nb'], inplace=True) 
 
     #deleting columns that are not useful anymore and renaming columns for clarity
@@ -105,7 +105,7 @@ if __name__ == "__main__":
     data_decoding=pd.read_csv('data/data_decoding.csv')
     data_desc=pd.read_csv('data/data_desc.csv')
 
-    data_for_generation = create_resume_database(data_decoding, data_desc, to_csv=False) #this gives us the database.
+    data_for_generation = create_resume_database(data_decoding, data_desc, to_csv=True) #this gives us the database.
 
     #exporting the database in csv format 
     print(data_for_generation.head())

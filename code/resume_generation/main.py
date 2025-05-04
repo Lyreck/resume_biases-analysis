@@ -37,9 +37,9 @@ if __name__ == "__main__":
         # Extract the necessary information from the row
         name = row['name']
         surname = row['surname']
-        comp_name = row['comp_name'].capitalize()
+        comp_name = row['comp_name'].capitalize().replace("&", r"and")
         job_desc = row['job_desc']
-        association_name = row['association'].capitalize()
+        association_name = row['association'].capitalize().replace("&", r"and")
         association_desc = row['vol_desc']
         field_of_study = row['field_of_study']
 
@@ -54,10 +54,9 @@ if __name__ == "__main__":
 
         insert_descriptions_to_pdf(name+ " " + surname, comp_name, job_desc, association_name, association_desc, field_of_study, out_directory="data/generated_resumes", resume_filename=whole_line, verbose=False)
 
-        if index == 30 and verbose:
+        if index == 100 and verbose:
             print(f"Estimated time to finish generating {n} resumes: {round( ( ((t.time()-t0) / 3600 ) /index)*n,2)} hours")
-            break
-        if index > 30 and verbose:
+        if index > 100 and verbose:
             progress(int((index+1)/n*100))
 
     if verbose:

@@ -3,6 +3,8 @@ import pandas as pd
 from pylatex import Document, Section, Itemize, Command
 from pylatex.utils import NoEscape
 
+######################## Copilot proposal ########################
+
 def transform_description_to_latex(description):
     # Replace **bold** with LaTeX \textbf{}
     description = description.replace("**", "\\textbf{", 1).replace("**", "}", 1)
@@ -33,6 +35,11 @@ def generate_pdf_from_dataframe(csv_file, output_pdf):
 
     # Generate the PDF
     doc.generate_pdf(output_pdf, clean_tex=False)
+
+######################## Copilot proposal ########################
+
+def to_pdf(csv):
+    pass
 
 # Example usage
 csv_file = "Doctor.csv"  # Replace with your CSV file path

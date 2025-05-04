@@ -35,7 +35,9 @@ def process_markdown_job(experience_description):
 
     # Extract bullet points
     experience_description = experience_description.replace("%", r"\%") #remove % that would make comments in latex
-    items = re.findall(r"- (.*?)(?=  -|$)", experience_description)
+    experience_description = experience_description.replace("&", r"and") # another special character to remove
+
+    items = re.findall(r"-\s+(.*?)(?=\s*-|$)", experience_description, flags=re.DOTALL) #re.findall(r"- (.*?)(?=  -|$)", experience_description) #Old version recognized only hyphens "-" with one space.
     items = [item.strip() for item in items]
     # Remove the first item, which is the title and company
     items = items[1:] if len(items) > 1 else []
@@ -59,6 +61,7 @@ def process_markdown_association(association):
     # Extract bullet points
     #items = re.findall(r"- (.*?)(?=  -|$)", association)
     association = association.replace("%", r"\%") #remove % that would make comments in latex
+    association = association.replace("&", r"and")
 
     items = re.findall(r"- (.*?)(?=\s*-|$)", association, flags=re.DOTALL)
     items = [item.strip() for item in items]
