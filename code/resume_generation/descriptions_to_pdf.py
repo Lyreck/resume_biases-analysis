@@ -90,14 +90,14 @@ def insert_descriptions_to_pdf(name, company_name, job_desc, association_name, a
 
     # Compile the .tex file into a PDF using pdflatex
     try:
-        # subprocess.run(["pdflatex", "-output-directory", out_directory, resume_filename + ".tex"], check=True) # with verbose
-        with open(os.devnull, 'w') as devnull: #without verbose
-            subprocess.run(
-                ["pdflatex", "-output-directory", out_directory, resume_filename + ".tex"],
-                stdout=devnull,  # Suppress standard output
-                stderr=devnull,  # Suppress error output
-                check=True
-            )
+        subprocess.run(["pdflatex", "-output-directory", out_directory, resume_filename + ".tex"], check=True) # with verbose
+        # with open(os.devnull, 'w') as devnull: #without verbose
+        #     subprocess.run(
+        #         ["pdflatex", "-output-directory", out_directory, resume_filename + ".tex"],
+        #         stdout=devnull,  # Suppress standard output
+        #         stderr=devnull,  # Suppress error output
+        #         check=True
+        #     )
         if verbose:
           print(f"PDF generated successfully: {os.path.join(out_directory, resume_filename + '.pdf')}")
     except subprocess.CalledProcessError as e:

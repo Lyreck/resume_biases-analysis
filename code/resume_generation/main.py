@@ -52,7 +52,7 @@ if __name__ == "__main__":
         # hash_object = hashlib.sha256(whole_line.encode())
         # resume_key = str(hash(hash_object.hexdigest())) #has to be a string to be used as a filename.
 
-        insert_descriptions_to_pdf(name+ " " + surname, comp_name, job_desc, association_name, association_desc, field_of_study, out_directory="data/generated_resumes", resume_filename=whole_line, verbose=False)
+        insert_descriptions_to_pdf(name+ " " + surname, comp_name, job_desc, association_name, association_desc, field_of_study, out_directory="data/generated_resumes", resume_filename=whole_line, verbose=verbose)
 
         if index == 100 and verbose:
             print(f"Estimated time to finish generating {n} resumes: {round( ( ((t.time()-t0) / 3600 ) /index)*n,2)} hours")
