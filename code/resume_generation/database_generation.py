@@ -4,7 +4,7 @@ import numpy as np
 import re 
 
 
-def create_database(data_cv, data_desc, to_csv=False):
+def create_resume_database(data_cv, data_desc, to_csv=False):
     """
     This function creates a database from the given data_cv and data_desc DataFrames.
     It processes the data to extract relevant information and combines it into a final DataFrame.
@@ -100,7 +100,7 @@ if __name__ == "__main__":
     data_cv=pd.read_csv('data/data_decoding.csv')
     data_desc=pd.read_csv('data/description_offers.csv')
 
-    data_for_generation = create_database(data_cv, data_desc, to_csv=False) #this gives us the database.
+    data_for_generation = create_resume_database(data_cv, data_desc, to_csv=False) #this gives us the database.
 
     #exporting the database in csv format 
     print(data_for_generation.head())
