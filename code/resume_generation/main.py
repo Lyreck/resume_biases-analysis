@@ -5,6 +5,8 @@
 # 2. JobDesc Name, .... ??? + key
 # 3. CV Name, Education Sector, .... (genre mettre dans la database toutes les infos importantes du CV) + key
 
+## Please download the files data_decoding.csv and data_desc.csv and put them in the data folder.
+
 import pandas as pd
 import hashlib
 import time as t
