@@ -1,42 +1,7 @@
-2025-05-05 12:38:33,035 (pdf_to_json.py:60) - INFO: Started to read from Data/Resumes
-2025-05-05 12:38:33,039 (pdf_to_json.py:36) - INFO: Deleted old files from /Users/lld/Desktop/Ecole/SciencesPo/S2/biases_in_AI/group-project/resume_biases-analysis/code/cv_job_parsing/Data/Processed/Resumes
-2025-05-05 12:38:33,040 (pdf_to_json.py:71) - INFO: Reading from Data/Resumes is now complete.
-2025-05-05 12:38:33,041 (pdf_to_json.py:82) - INFO: Started parsing the resumes.
-2025-05-05 12:38:35,592 (core.py:65) - INFO: loaded 'en_core_web_md' spaCy language pipeline
-2025-05-05 12:38:52,624 (pdf_to_json.py:86) - INFO: Parsing of the resumes is now complete.
-2025-05-05 12:38:52,624 (pdf_to_json.py:88) - INFO: Started to read from Data/JobDescription
-2025-05-05 12:38:52,625 (pdf_to_json.py:36) - INFO: Deleted old files from /Users/lld/Desktop/Ecole/SciencesPo/S2/biases_in_AI/group-project/resume_biases-analysis/code/cv_job_parsing/Data/Processed/JobDescription
-2025-05-05 12:38:52,625 (pdf_to_json.py:99) - INFO: Reading from Data/JobDescription is now complete.
-2025-05-05 12:38:52,625 (pdf_to_json.py:112) - INFO: Started parsing the Job Descriptions.
-2025-05-05 12:38:53,538 (pdf_to_json.py:116) - INFO: Parsing of the Job Descriptions is now complete.
-2025-05-05 12:38:53,538 (pdf_to_json.py:117) - INFO: Success now run `streamlit run streamlit_second.py`
-2025-05-05 12:38:53,544 (get_score.py:128) - INFO: Started getting similarity score
-2025-05-05 12:38:55,237 (get_score.py:142) - INFO: Finished getting similarity score
-2025-05-05 12:38:55,247 (get_score.py:128) - INFO: Started getting similarity score
-2025-05-05 12:38:55,799 (get_score.py:142) - INFO: Finished getting similarity score
-2025-05-05 12:38:55,801 (get_score.py:128) - INFO: Started getting similarity score
-2025-05-05 12:38:56,240 (get_score.py:142) - INFO: Finished getting similarity score
-2025-05-05 12:38:56,242 (get_score.py:128) - INFO: Started getting similarity score
-2025-05-05 12:38:56,662 (get_score.py:142) - INFO: Finished getting similarity score
-2025-05-05 12:38:56,664 (get_score.py:128) - INFO: Started getting similarity score
-2025-05-05 12:38:57,022 (get_score.py:142) - INFO: Finished getting similarity score
-2025-05-05 12:38:57,025 (get_score.py:128) - INFO: Started getting similarity score
-2025-05-05 12:38:57,378 (get_score.py:142) - INFO: Finished getting similarity score
-2025-05-05 12:38:57,380 (get_score.py:128) - INFO: Started getting similarity score
-2025-05-05 12:38:57,734 (get_score.py:142) - INFO: Finished getting similarity score
-2025-05-05 12:38:57,735 (get_score.py:128) - INFO: Started getting similarity score
-2025-05-05 12:38:58,093 (get_score.py:142) - INFO: Finished getting similarity score
-2025-05-05 12:38:58,094 (get_score.py:128) - INFO: Started getting similarity score
-2025-05-05 12:38:58,494 (get_score.py:142) - INFO: Finished getting similarity score
-2025-05-05 12:38:58,496 (get_score.py:128) - INFO: Started getting similarity score
-2025-05-05 12:38:58,910 (get_score.py:142) - INFO: Finished getting similarity score
-2025-05-05 12:38:58,912 (get_score.py:128) - INFO: Started getting similarity score
-2025-05-05 12:38:59,295 (get_score.py:142) - INFO: Finished getting similarity score
-2025-05-05 12:38:59,297 (get_score.py:128) - INFO: Started getting similarity score
-2025-05-05 12:38:59,609 (get_score.py:142) - INFO: Finished getting similarity score
-2025-05-05 12:38:59,610 (get_score.py:128) - INFO: Started getting similarity score
-2025-05-05 12:38:59,961 (get_score.py:142) - INFO: Finished getting similarity score
-2025-05-05 12:38:59,963 (get_score.py:128) - INFO: Started getting similarity score
-2025-05-05 12:39:00,334 (get_score.py:142) - INFO: Finished getting similarity score
-2025-05-05 12:39:00,336 (get_score.py:128) - INFO: Started getting similarity score
-2025-05-05 12:39:00,735 (get_score.py:142) - INFO: Finished getting similarity score
+2025-05-05 12:39:47,586 (pdf_to_json.py:60) - INFO: Started to read from Data/Resumes
+2025-05-05 12:39:47,586 (pdf_to_json.py:36) - INFO: Deleted old files from /home/lld_fixe/code/resume_biases-analysis/code/cv_job_parsing/Data/Processed/Resumes
+2025-05-05 12:39:48,263 (pdf_to_json.py:71) - INFO: Reading from Data/Resumes is now complete.
+2025-05-05 12:39:48,263 (pdf_to_json.py:82) - INFO: Started parsing the resumes.
+2025-05-05 12:39:49,059 (core.py:65) - INFO: loaded 'en_core_web_md' spaCy language pipeline
+2025-05-05 13:16:10,760 (_utils.py:453) - WARNING: invalid pdf header: b'%----'
+2025-05-05 13:16:10,761 (_utils.py:453) - WARNING: EOF marker not found
