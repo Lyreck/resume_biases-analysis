@@ -1,7 +1,4 @@
-2025-05-05 12:39:47,586 (pdf_to_json.py:60) - INFO: Started to read from Data/Resumes
-2025-05-05 12:39:47,586 (pdf_to_json.py:36) - INFO: Deleted old files from /home/lld_fixe/code/resume_biases-analysis/code/cv_job_parsing/Data/Processed/Resumes
-2025-05-05 12:39:48,263 (pdf_to_json.py:71) - INFO: Reading from Data/Resumes is now complete.
-2025-05-05 12:39:48,263 (pdf_to_json.py:82) - INFO: Started parsing the resumes.
-2025-05-05 12:39:49,059 (core.py:65) - INFO: loaded 'en_core_web_md' spaCy language pipeline
-2025-05-05 13:16:10,760 (_utils.py:453) - WARNING: invalid pdf header: b'%----'
-2025-05-05 13:16:10,761 (_utils.py:453) - WARNING: EOF marker not found
+2025-05-05 15:29:31,524 (get_score.py:128) - INFO: Started getting similarity score
+2025-05-05 15:30:02,129 (get_score.py:142) - INFO: Finished getting similarity score
+2025-05-05 15:30:00,766 (get_score.py:128) - INFO: Started getting similarity score
+2025-05-05 15:30:04,375 (get_score.py:142) - INFO: Finished getting similarity score
