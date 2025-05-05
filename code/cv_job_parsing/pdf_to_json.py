@@ -117,3 +117,5 @@ def pdf_to_json():
     logging.info("Success now run `streamlit run streamlit_second.py`")
 
 
+if __name__ == "__main__":
+    print("coucou")
