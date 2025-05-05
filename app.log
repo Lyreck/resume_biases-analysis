@@ -1,5 +1,0 @@
-2025-05-05 12:39:31,952 (pdf_to_json.py:60) - INFO: Started to read from Data/Resumes
-2025-05-05 12:39:31,952 (pdf_to_json.py:36) - INFO: Deleted old files from /home/lld_fixe/code/resume_biases-analysis/code/cv_job_parsing/Data/Processed/Resumes
-2025-05-05 12:39:31,952 (pdf_to_json.py:74) - ERROR: There are no resumes present in the specified folder.
-2025-05-05 12:39:31,952 (pdf_to_json.py:75) - ERROR: Exiting from the program.
-2025-05-05 12:39:31,952 (pdf_to_json.py:76) - ERROR: Please add resumes in the Data/Resumes folder and try again.

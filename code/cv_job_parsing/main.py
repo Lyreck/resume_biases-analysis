@@ -60,19 +60,33 @@ if __name__ == "__main__":
     pairs = [(resume, job) for resume in resume_list for job in job_list]
 
     n = len(pairs)
+
+    ###### Time estimation
+    t0 = t.time()
+
+    # Set up the pool - you can adjust the number of processes if needed
+    with Pool(processes=cpu_count()-1) as pool:
+        results = pool.map(process_pair, pairs[:100])
+
+    elapsed_time = (t.time() - t0) / 3600
+    print(f"Time estimation to compute score for {n} pairs (estimation sample: {100}): {(elapsed_time / 100)*n:.2f} hours.")
+    ######
+
     t0 = t.time()
 
     # Set up the pool - you can adjust the number of processes if needed
     with Pool(processes=cpu_count()-1) as pool:
         results = pool.map(process_pair, pairs)
 
+    elapsed_time = (t.time() - t0) / 3600
+    print(f"Finished scoring {n} pairs in {elapsed_time:.2f} hours.")
+
     # Convert results to DataFrame
     df = pd.DataFrame(results, columns=["Resume", "JobDescription", "Score"])
 
-    df.to_csv("../../data/dataframes/all_scores.csv", index=False)
-
-    elapsed_time = (t.time() - t0) / 3600
-    print(f"Finished scoring {n} pairs in {elapsed_time:.2f} hours.")
+    # Ensure the output directory exists
+    os.makedirs("data/dataframes/", exist_ok=True)
+    df.to_csv("data/dataframes/all_scores.csv", index=False)
 
 
 
