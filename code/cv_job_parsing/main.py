@@ -52,6 +52,62 @@ def process_pair(pair):
 
 if __name__ == "__main__":
 
+
+
+    # Ensure the output directories exist
+    os.makedirs("data/dataframe/name", exist_ok=True)
+    os.makedirs("data/dataframe/job", exist_ok=True)
+    os.makedirs("data/dataframe/volunteering", exist_ok=True)
+
+    # Selected Job Offers (one per category - for the moment at least)
+    job_offers = {"AdminAssistant": "JobDescription-Administrative_AssistantAdminAssistant(ChineseSpeaking)LoonFungLtd.pdf9dca1198-65f6-4d63-97a3-3603ee46e2ef.json", 
+                  "ItOfficer": "JobDescription-IT_OfficerLossPreventionOfficerHomeSense.pdf50683fd5-e774-484d-9598-204405d0fe0e.json",
+                  "Doctor": "JobDescription-DoctorMikeEdmondsDiabeticFootClinicalFellowshipKing'sCollegeHospitalNHSFoundationTrust.pdf03ccadeb-f61c-4a36-a21b-2236bab6dae9.json",
+                  "Nurse": "JobDescription-NurseRegisteredNurse(RMNorRGN)EdenBrookHomeCare.pdf3daa186b-baa2-4903-91cf-1c716758d65c.json",
+                  "SoftwareEng": "JobDescription-software_engineerLeadSoftwareEngineer-DeveloperPlatformJPMorganChase.pdfc6c46738-bfe0-4aa1-a2fd-3a98a60e5c85.json",
+                  "Teacher": "JobDescription-TeacherSingingTeacherVictoria’sVoices.pdf50bf0fda-fb85-44e2-bf31-0f5eab0092c6.json"
+                  }
+    
+    correspondences_names = {"AdminAssistant": {"adapted": ["AFRICAN IMPACT", "EUROPEAN COMMISSION"], "not_adapted": ["AFRICAN IMPACT", "GUY'S HOSPITAL"]}, 
+                  "ItOfficer": {"adapted": ["E-GAME SOCIETY", "GOOGLE"], "not_adapted": ["E-GAME SOCIETY", "TEACHER LYCEE FRANCAIS CHARLES DE GAULLE"]},
+                  "Doctor": {"adapted": ["BRITTISH RED CROSS", "ST THOMAS HOSPITAL"], "not_adapted": ["BRITTISH RED CROSS", "BAIDU"]},
+                  "Nurse": {"adapted": ["VOLUNTEER IN THE LOCAL CATHOLIC CHURCH", "ST. BARTHOLOMEW'S HOSPITAL"], "not_adapted": ["VOLUNTEER IN THE LOCAL CATHOLIC CHURCH", "FREELANCE"]},
+                  "SoftwareEng": {"adapted": ["JEWISH CARE", "MISTRAL"], "not_adapted": ["JEWISH CARE", "TOKYO UNIVERSITY'S HOPITAL"]},
+                  "Teacher": {"adapted": ["LANGUAGE EXCHANGE SOCIETY", "TEACHING ASSISTANT KING'S COLLEGE"], "not_adapted": ["LANGUAGE EXCHANGE SOCIETY", "JOHNSONANDJONHSON"]}
+                  }
+
+    ############### ATTENTION TREAT COMPANY NAMES AND VOLUN WITH ANTI & ETC
+    # comp_name = row['comp_name'].capitalize().replace("&", r"and")
+    # association_name = row['association'].capitalize().replace("&", r"and")
+    ############### ATTENTION TREAT COMPANY NAMES AND VOLUN WITH ANTI & ETC
+
+    ### First experiment: make names change and fix the rest
+    ## For each job offer:
+
+    for job_offer in job_offers.keys():
+
+    # 1: job XP is adapted to job offer
+        job_XP = 
+
+    # 2: job XP is not adapted to job offer
+
+
+    ### Second experiment: make volunteering change and fix the rest
+    ## For each job offer:
+
+    # 1: job XP is adapted to job offer
+
+    # 2: job XP is not adapted to job offer
+
+
+    ### Third experiment: make job XP change and fix the rest
+    ## For each job offer:
+
+    # 1: volunteering XP is not politically clivant
+
+    # 2: volunteering XP is politically clivant
+
+
     
 
     # Prepare list of all (resume, job_description) pairs
