@@ -53,7 +53,7 @@ def process_pair(pair):
     return (resume, job_description, score)
 
 if __name__ == "__main__":
-    first_experiment, second_experiment, third_experiment = True, True, True
+    first_experiment, second_experiment, third_experiment = False, False, True
     
 
     database = pd.read_csv("data/dataframes/database_all_cv_combinations_with_keys.csv") #this gives us the database.
@@ -255,7 +255,7 @@ if __name__ == "__main__":
             # Save the scores to a CSV file
             data = {"Resume": resume_names, "JobDescription": [job_offer_json_name for _ in resume_names], "Score": scores, "clivant": [0 for _ in resume_names]} #job_offer_json_name should change to the pdf file if we want to automate the whole thing and stay coherent with the key for the Resume database.
             df = pd.DataFrame(data=data)
-            df.to_csv(f"data/dataframes/job/{job_type}_{job_XP.replace(' ', '').capitalize()}_{name.replace(' ', '').capitalize()}.csv", index=False) #format: type of job offer, job experience, and volunteering. This is done to be able to trace experiments.
+            df.to_csv(f"data/dataframes/job/{job_type}_{asso.replace(' ', '').capitalize()}_{name.replace(' ', '').capitalize()}.csv", index=False) #format: type of job offer, job experience, and volunteering. This is done to be able to trace experiments.
 
             print(f"Finished part 1 (not_clivant) of Experiment 3 (making volunteering XPs vary) for {job_type}. While fetching json files, we found {non_generated_resumes} non-generated resumes.")
 
@@ -282,7 +282,7 @@ if __name__ == "__main__":
             # Save the scores to a CSV file
             data = {"Resume": resume_names, "JobDescription": [job_offer_json_name for _ in resume_names], "Score": scores, "clivant": [1 for _ in resume_names]} #job_offer_json_name should change to the pdf file if we want to automate the whole thing and stay coherent with the key for the Resume database.
             df = pd.DataFrame(data=data)
-            df.to_csv(f"data/dataframes/job/{job_type}_{job_XP.replace(' ', '').capitalize()}_{name.replace(' ', '').capitalize()}.csv", index=False) #format: type of job offer, job experience, and volunteering. This is done to be able to trace experiments.
+            df.to_csv(f"data/dataframes/job/{job_type}_{asso.replace(' ', '').capitalize()}_{name.replace(' ', '').capitalize()}.csv", index=False) #format: type of job offer, job experience, and volunteering. This is done to be able to trace experiments.
 
             print(f"Finished part 2 (clivant) of Experiment 3 (making volunteering XPs vary) for {job_type}. While fetching json files, we found {non_generated_resumes} non-generated resumes.")
 
