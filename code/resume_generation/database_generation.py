@@ -96,14 +96,14 @@ def create_resume_database(data_decoding, data_desc, to_csv=False):
 
 
     if to_csv:
-        data_for_generation.to_csv('database_all_cv_combinations.csv', index=False)
+        data_for_generation.to_csv('database_all_cv_combinations_with_keys.csv', index=False)
 
     return data_for_generation
 
 if __name__ == "__main__":
-    # Example usage
-    data_decoding=pd.read_csv('data/data_decoding.csv')
-    data_desc=pd.read_csv('data/data_desc.csv')
+    # generate the database with keys.
+    data_decoding=pd.read_csv('data_decoding.csv')
+    data_desc=pd.read_csv('data_desc.csv')
 
     data_for_generation = create_resume_database(data_decoding, data_desc, to_csv=True) #this gives us the database.
 
