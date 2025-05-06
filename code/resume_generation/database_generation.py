@@ -93,7 +93,13 @@ def create_resume_database(data_decoding, data_desc, to_csv=False):
                                             np.where(data_for_generation['comp_type'] == 'tech_comp', 'Computer Science',
                                                     np.where(data_for_generation['comp_type'] == 'med_comp', 'Medicine', None)))
 
-
+    keys = [name + surname + comp_name + association_name for name, surname, comp_name, association_name in zip(
+        data_for_generation['name'],
+        data_for_generation['surname'],
+        data_for_generation['comp_name'],
+        data_for_generation['association']
+    )]
+    data_for_generation['key'] = keys
 
     if to_csv:
         data_for_generation.to_csv('database_all_cv_combinations_with_keys.csv', index=False)
@@ -102,8 +108,8 @@ def create_resume_database(data_decoding, data_desc, to_csv=False):
 
 if __name__ == "__main__":
     # generate the database with keys.
-    data_decoding=pd.read_csv('data_decoding.csv')
-    data_desc=pd.read_csv('data_desc.csv')
+    data_decoding=pd.read_csv('data/data_decoding.csv')
+    data_desc=pd.read_csv('data/data_desc.csv')
 
     data_for_generation = create_resume_database(data_decoding, data_desc, to_csv=True) #this gives us the database.
 
