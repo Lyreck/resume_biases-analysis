@@ -72,14 +72,14 @@ if __name__ == "__main__":
     print(f"Time estimation to compute score for {n} pairs (estimation sample: {100}): {(elapsed_time / 100)*n:.2f} hours.")
     ######
 
-    t0 = t.time()
+    # t0 = t.time()
 
-    # Set up the pool - you can adjust the number of processes if needed
-    with Pool(processes=cpu_count()-1) as pool:
-        results = pool.map(process_pair, pairs)
+    # # Set up the pool - you can adjust the number of processes if needed
+    # with Pool(processes=cpu_count()-1) as pool:
+    #     results = pool.map(process_pair, pairs)
 
-    elapsed_time = (t.time() - t0) / 3600
-    print(f"Finished scoring {n} pairs in {elapsed_time:.2f} hours.")
+    # elapsed_time = (t.time() - t0) / 3600
+    # print(f"Finished scoring {n} pairs in {elapsed_time:.2f} hours.")
 
     # Convert results to DataFrame
     df = pd.DataFrame(results, columns=["Resume", "JobDescription", "Score"])
