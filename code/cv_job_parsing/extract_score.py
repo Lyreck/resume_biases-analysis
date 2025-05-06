@@ -25,6 +25,10 @@ def extract_score(resume_name, jd_name):
     Returns:
         float: The similarity score between the resume and job description.
     """
+
+    if resume_name is None or jd_name is None:
+        raise ValueError(f"Error computing score between Resume and Job Description: resume_name and jd_name cannot be None (got {resume_name}, {jd_name})")
+
     selected_file = read_json("Data/Processed/Resumes/" + resume_name)
     selected_jd = read_json("Data/Processed/JobDescription/" + jd_name)
 

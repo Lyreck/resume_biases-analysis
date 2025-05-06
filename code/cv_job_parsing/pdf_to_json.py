@@ -117,6 +117,24 @@ def pdf_to_json():
     logging.info("Success now run `streamlit run streamlit_second.py`")
 
 
+def resume_pdf_to_json_single_file(file):
+    """
+    Same as pdf_to_json but for a single file.
+    filename is given as an argument.
+    """
+
+    processor = ResumeProcessor(file)
+    success = processor.process()
+
+def jobdesc_pdf_to_json_single_file(file):
+    """
+    Same as pdf_to_json but for a single file.
+    filename is given as an argument.
+    """
+
+    processor = JobDescriptionProcessor(file)
+    success = processor.process()
+
 if __name__ == "__main__":
-    pdf_to_json()
+    # pdf_to_json()
     print("coucou")
