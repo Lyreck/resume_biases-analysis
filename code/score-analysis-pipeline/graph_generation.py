@@ -247,8 +247,18 @@ def generate_graphs(name = True, job = True, volunteering = True):
 
 
 
+def top_and_bottom_associations(df):
+    """
+    Displays the first 5 and last 5 associations in terms of mean scores.
 
-#generate_graphs(name=False)
+    Args:
+        df (pd.DataFrame): The DataFrame containing the data for volunteering.
+    """
+    mean_scores = df.groupby('association')['Score'].mean().sort_values()
+    print("Bottom 5 Associations by Mean Score:")
+    print(mean_scores.head(5))
+    print("\nTop 5 Associations by Mean Score:")
+    print(mean_scores.tail(5))
 
 
 
@@ -303,6 +313,8 @@ def generate_desc_stats(name=True, job=True, volunteering=True):
         print("\n=== Descriptive Statistics for Volunteering ===")
         df = concatenate_dataframes_with_jobtype("data/scores_experiments/volunteering/")
 
+        top_and_bottom_associations(df)
+
         # Mean scores by association
         print("Mean Scores by Association:")
         print(df.groupby('association')['Score'].mean())
@@ -317,6 +329,8 @@ def generate_desc_stats(name=True, job=True, volunteering=True):
         # Mean scores by comp_type
         print("\nMean Scores by Company Type:")
         print(df.groupby('comp_type')['Score'].mean())
+
+
 
 if __name__ == "__main__":
     # Example usage
