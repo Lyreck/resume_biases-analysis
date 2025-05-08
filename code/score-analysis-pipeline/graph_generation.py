@@ -47,6 +47,59 @@ def concatenate_dataframes_with_jobtype(folder_path):
 def generate_graphs(df):
     # graph generation (gender bias and score difference per jobtype)
 
+ 
+    # Ensure required columns exist
+    #required_columns = ['job_type', 'adapted', 'gender', 'british', 'Score']
+    #for col in required_columns:
+    #    if col not in df.columns:
+    #        raise ValueError(f"Column '{col}' is missing in the DataFrame.")
+
+    # 1. Mean scores for adapted == 1 and adapted == 0 per job type
+    adapted_scores = df.groupby(['job_type', 'adapted'])['Score'].mean().unstack()
+    adapted_scores.plot(kind='bar', figsize=(10, 6), title="Mean Scores by Adapted Status and Job Type")
+    plt.ylabel("Mean Score")
+    plt.xlabel("Job Type")
+    plt.legend(title="Adapted")
+    plt.tight_layout()
+    plt.savefig("graphs/name/mean_scores_adapted_vs_not_adapted_per_jobtype.png")
+    plt.show()
+
+    # 2. Mean scores for gender == 0 and gender == 1 per job type
+    gender_scores = df.groupby(['job_type', 'gender'])['Score'].mean().unstack()
+    gender_scores.plot(kind='bar', figsize=(10, 6), title="Mean Scores by Gender and Job Type")
+    plt.ylabel("Mean Score")
+    plt.xlabel("Job Type")
+    plt.legend(title="Gender")
+    plt.tight_layout()
+    plt.savefig("graphs/name/mean_scores_gender_per_jobtype.png")
+    plt.show()
+
+    british_scores = df.groupby(['job_type', 'british'])['Score'].mean().unstack()
+    british_scores.plot(kind='bar', figsize=(10, 6), title="Mean Scores by British Status and Job Type")
+    plt.ylabel("Mean Score")
+    plt.xlabel("Job Type")
+    plt.legend(title="British Status")
+    plt.tight_layout()
+    plt.savefig("graphs/name/mean_scores_british_per_jobtype.png")
+    plt.show()
+
+    # 3. Max and min scores per gender
+    gender_min_max = df.groupby('gender')['Score'].agg(['min', 'max'])
+    gender_min_max.plot(kind='bar', figsize=(8, 5), title="Max and Min Scores by Gender")
+    plt.ylabel("Score")
+    plt.xlabel("Gender")
+    plt.tight_layout()
+    plt.savefig("graphs/name/max_min_gender_overall.png")
+    plt.show()
+
+    # 4. Max and min scores per british == 0 or == 1
+    british_min_max = df.groupby('british')['Score'].agg(['min', 'max'])
+    british_min_max.plot(kind='bar', figsize=(8, 5), title="Max and Min Scores by British Status")
+    plt.ylabel("Score")
+    plt.xlabel("British Status")
+    plt.tight_layout()
+    plt.savefig("graphs/name/max_min_british_overall.png")
+    plt.show()
 
     # ehnicity difference per jobtype 
 
@@ -60,3 +113,6 @@ def generate_graphs(df):
     # 
     # clivant vs non clivant - jobtype and gender   
 
+folder_path = "data/name/"
+df = concatenate_dataframes_with_jobtype(folder_path)
+generate_graphs(df)
