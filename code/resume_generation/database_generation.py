@@ -54,7 +54,7 @@ def create_resume_database(data_decoding, data_desc, to_csv=False):
     experience.drop_duplicates(subset=['nb'], inplace=True) 
 
     #deleting columns that are not useful anymore and renaming columns for clarity
-    experience = experience.drop(columns = ['nb', 'company'])
+    experience = experience.drop(columns = ['nb', 'company', 'ideology'])
     experience = experience.rename(columns={ "description": "job_desc"})
     #print(experience)
 
