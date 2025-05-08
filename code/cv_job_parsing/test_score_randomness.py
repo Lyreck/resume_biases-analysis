@@ -1,7 +1,7 @@
 from extract_score import extract_score
 
-resume = "Resume-cv_AMAN_SINGH.pdf2382af65-15c7-4eb8-b9e8-c7360b0c1a65.json" #changes if resumes are parsed into json again.
-job_description = "JobDescription-Junior Software Engineer.pdfed68cfce-72fe-4845-9872-3f96a11f39c7.json" #changes if job descriptions are parsed into json again.
+resume = "Resume-AlexanderRobertsAberdeen royal infirmaryAfrican impact.pdf5acaaa05-2f11-4674-9e57-4e75403eeeaf.json" #changes if resumes are parsed into json again.
+job_description = "JobDescription-Administrative_AssistantAdministrativeAssistantDoneviSoftware.pdfb52c20b0-dcc4-471c-9a6c-5447cfad28b6.json" #changes if job descriptions are parsed into json again.
 
 nb_de_tests = 1000
 scores=[]

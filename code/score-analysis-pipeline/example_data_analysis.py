@@ -8,6 +8,8 @@ def load_and_process_data_files(database_path = "data/database_all_cv_combinatio
     resume_database.dropna(subset=['key'], inplace=True)
     resume_database.drop_duplicates(subset=['key'], inplace=True)
     resume_database['key'] = resume_database['key'].apply(lambda x: x.replace(" ","").lower())
+    #replace all keys that contain a "&" with "and" (for johnson&johnson, for example)
+    resume_database['key'] = resume_database['key'].apply(lambda x: x.replace("&","and"))
 
     # Load the experiment where we modify names, and have a job experience that is not adapted to the job offer.
     name_experiment_nurse_not_adapted = pd.read_csv(experiment_path)
