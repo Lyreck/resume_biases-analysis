@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns 
 import os
+from scipy.stats import ttest_ind
 from example_data_analysis import load_and_process_data_files 
 
 #take a folder and concaenate all the dataames from one experience and add a column for jobtype ! 
@@ -39,9 +40,10 @@ def concatenate_dataframes_with_jobtype(folder_path):
     return concatenated_df
 
 
+
 # test for the function 
 
-#folder_path = "data/name/"
+#folder_path = "data/scores_experiments/name/"
 #df = concatenate_dataframes_with_jobtype(folder_path)
 #print(df.columns) 
 def generate_graphs(name = True, job = True, volunteering = True):
@@ -58,8 +60,7 @@ def generate_graphs(name = True, job = True, volunteering = True):
     os.makedirs("graphs/name", exist_ok=True)
     os.makedirs("graphs/job", exist_ok=True)
     os.makedirs("graphs/volunteering", exist_ok=True)
-    df['gender'] = df['gender'].replace({0: 'M', 1: 'F'})
-
+    
 
     green_color = "#78a97f"
     orange_color = "#e28460"
@@ -75,13 +76,15 @@ def generate_graphs(name = True, job = True, volunteering = True):
     if name: 
         folder_path_name = "data/scores_experiments/name/"
         df = concatenate_dataframes_with_jobtype(folder_path_name)
+        df['gender'] = df['gender'].replace({0: 'M', 1: 'F'})
+
 
         # 1. Mean scores for adapted == 1 and adapted == 0 per job type
         adapted_scores = df.groupby(['job_type', 'adapted'])['Score'].mean().unstack()
         adapted_scores.plot(kind='bar', figsize=(10, 6),color = adapt_colors, title="Mean Scores by Adapted Status and Job Type")
         plt.ylabel("Mean Score")
         plt.xlabel("Job Type")
-        plt.legend(title="Mean compatibility scores by adapted resume status and job type")
+        plt.title("Mean compatibility scores by adapted resume status and job type")
         plt.tight_layout()
         plt.savefig("graphs/name/mean_scores_adapted_vs_not_adapted_per_jobtype.png")
         plt.show()
@@ -91,7 +94,7 @@ def generate_graphs(name = True, job = True, volunteering = True):
         gender_scores.plot(kind='bar', figsize=(10, 6),color = gender_colors, title="Mean Scores by Gender and Job Type")
         plt.ylabel("Mean Score")
         plt.xlabel("Job Type")
-        plt.legend(title="Mean compatibility scores by gender and job type")
+        plt.title("Mean compatibility scores by gender and job type")
         plt.tight_layout()
         plt.savefig("graphs/name/mean_scores_gender_per_jobtype.png")
         plt.show()
@@ -100,7 +103,7 @@ def generate_graphs(name = True, job = True, volunteering = True):
         british_scores.plot(kind='bar', figsize=(10, 6), color = custom_colors, title="Mean Scores by British Status and Job Type")
         plt.ylabel("Mean Score")
         plt.xlabel("Job Type")
-        plt.legend(title="C⁠ompatibility scores by name origin and job type")
+        plt.title("C⁠ompatibility scores by name origin and job type")
         plt.tight_layout()
         plt.savefig("graphs/name/mean_scores_british_per_jobtype.png")
         plt.show()
@@ -110,7 +113,7 @@ def generate_graphs(name = True, job = True, volunteering = True):
         gender_min_max.plot(kind='bar', figsize=(8, 5),color = gender_colors, title="Max and Min Scores by Gender")
         plt.ylabel("Score")
         plt.xlabel("Gender")
-        plt.legend(title='C⁠ompatibility scores by gender')
+        plt.title('C⁠ompatibility scores by gender')
         plt.tight_layout()
         plt.savefig("graphs/name/max_min_gender_overall.png")
         plt.show()
@@ -119,7 +122,7 @@ def generate_graphs(name = True, job = True, volunteering = True):
         gender_mean.plot(kind='bar', figsize=(8, 5), color = gender_colors, title="Mean Scores by Gender")
         plt.ylabel("Score")
         plt.xlabel("Gender")
-        plt.legend(title='Mean c⁠ompatibility scores by gender')
+        plt.title('Mean c⁠ompatibility scores by gender')
         plt.tight_layout()
         plt.savefig("graphs/name/mean_gender_overall.png")
         plt.show()
@@ -128,8 +131,8 @@ def generate_graphs(name = True, job = True, volunteering = True):
         british_min_max = df.groupby('british')['Score'].agg(['min', 'max'])
         british_min_max.plot(kind='bar', figsize=(8, 5), color = custom_colors,title="Max and Min Scores by British Status")
         plt.ylabel("Score")
-        plt.xlabel("British Status")
-        plt.legend(title='C⁠ompatibility scores by name origin')
+        plt.xlabel("British Name")
+        plt.title('C⁠ompatibility scores by name origin')
         plt.tight_layout()
         plt.savefig("graphs/name/max_min_british_overall.png")
         plt.show()
@@ -137,8 +140,8 @@ def generate_graphs(name = True, job = True, volunteering = True):
         british_mean = df.groupby('british')['Score'].mean()
         british_mean.plot(kind='bar', figsize=(8, 5), color = custom_colors,title="Mean Scores by British status")
         plt.ylabel("Score")
-        plt.xlabel("British Status")
-        plt.legend(title='Mean c⁠ompatibility scores by name origin')
+        plt.xlabel("British Name")
+        plt.title('Mean c⁠ompatibility scores by name origin')
         plt.tight_layout()
         plt.savefig("graphs/name/mean_british_overall.png")
         plt.show()
@@ -150,10 +153,34 @@ def generate_graphs(name = True, job = True, volunteering = True):
         clivant_scores.plot(kind='bar', figsize=(10, 6),color = adapt_colors, title="Mean Scores by Adapted Status and Job Type")
         plt.ylabel("Mean Score")
         plt.xlabel("Job Type")
-        plt.legend(title="Mean compatibility scores by volunteering type and per job type")
+        plt.title("Mean compatibility scores by volunteering type and per job type")
         plt.tight_layout()
         plt.savefig("graphs/job/mean_scores_clivant_vs_not_clivant_per_jobtype.png")
         plt.show()
+
+        
+        # Mean scores by comp_type
+        comp_type_scores = df.groupby('comp_type')['Score'].mean()
+        comp_type_scores.plot(kind='bar', figsize=(10, 6), color=green_color, title="Mean Scores by Company Type")
+        plt.ylabel("Mean Score")
+        plt.xlabel("Company Type")
+        plt.tight_layout()
+        plt.savefig("graphs/job/mean_scores_by_comp_type.png")
+        plt.show()
+
+
+         # Mean scores by comp_name
+        comp_name_scores = df.groupby('comp_name')['Score'].mean()
+        comp_name_scores.plot(kind='bar', figsize=(10, 6), color=orange_color, title="Mean Scores by Company Name")
+        plt.ylabel("Mean Score")
+        plt.xlabel("Company Name")
+        plt.tight_layout()
+        plt.savefig("graphs/job/mean_scores_by_comp_name.png")
+        plt.show()
+
+        
+
+
 
 
 
@@ -176,6 +203,15 @@ def generate_graphs(name = True, job = True, volunteering = True):
         plt.savefig("graphs/volunteering/mean_scores_adapted_vs_not_adapted_per_jobtype.png")
         plt.show()
 
+        association_scores = df.groupby('association')['Score'].mean()
+        association_scores.plot(kind='bar', figsize=(10, 6), color=green_color, title="Mean Scores by Association")
+        plt.ylabel("Mean Score")
+        plt.xlabel("Association")
+        plt.tight_layout()
+        plt.savefig("graphs/volunteering/mean_scores_by_association.png")
+        plt.show()
+
+
 
 
          
@@ -193,6 +229,77 @@ def generate_graphs(name = True, job = True, volunteering = True):
 
 
 
+#generate_graphs(name=False)
 
 
-#def generate_desc_stats(df): 
+
+def generate_desc_stats(name=True, job=True, volunteering=True):
+    """
+    Generates descriptive statistics and performs t-tests for gender and British status.
+    Prints mean scores for various groupings.
+    """
+    if name:
+        print("=== Descriptive Statistics for Name ===")
+        folder_path_name = "data/scores_experiments/name/"
+        df = concatenate_dataframes_with_jobtype(folder_path_name)
+        df['gender'] = df['gender'].replace({0: 'M', 1: 'F'})
+
+        # T-test for gender
+        male_scores = df[df['gender'] == 'M']['Score']
+        female_scores = df[df['gender'] == 'F']['Score']
+        t_stat_gender, p_value_gender = ttest_ind(male_scores, female_scores, nan_policy='omit')
+        print(f"T-test for Gender: t-stat={t_stat_gender:.3f}, p-value={p_value_gender:.3f}")
+
+        # T-test for British status
+        british_scores = df[df['british'] == 1]['Score']
+        non_british_scores = df[df['british'] == 0]['Score']
+        t_stat_british, p_value_british = ttest_ind(british_scores, non_british_scores, nan_policy='omit')
+        print(f"T-test for British Status: t-stat={t_stat_british:.3f}, p-value={p_value_british:.3f}")
+
+        # Mean scores
+        print("Mean Scores by Gender:")
+        print(df.groupby('gender')['Score'].mean())
+        print("\nMean Scores by British Status:")
+        print(df.groupby('british')['Score'].mean())
+        print("\nMean Scores Overall:")
+        print(df['Score'].mean())
+        print("\nMean Scores by Job Posting:")
+        print(df.groupby('job_type')['Score'].mean())
+
+    if job:
+        print("\n=== Descriptive Statistics for Job ===")
+        df = concatenate_dataframes_with_jobtype("data/scores_experiments/job/")
+
+        # Mean scores by comp_type
+        print("Mean Scores by Company Type:")
+        print(df.groupby('comp_type')['Score'].mean())
+
+        # Mean scores by comp_name
+        print("\nMean Scores by Company Name:")
+        print(df.groupby('comp_name')['Score'].mean())
+
+        # Mean scores by job_posting
+        print("\nMean Scores by Job Posting:")
+        print(df.groupby('comp_name')['Score'].mean())
+
+    if volunteering:
+        print("\n=== Descriptive Statistics for Volunteering ===")
+        df = concatenate_dataframes_with_jobtype("data/scores_experiments/volunteering/")
+
+        # Mean scores by association
+        print("Mean Scores by Association:")
+        print(df.groupby('association')['Score'].mean())
+
+        # Mean scores by job_posting
+        print("\nMean Scores by Job Posting:")
+        print(df.groupby('comp_name')['Score'].mean())
+
+        # Mean scores by comp_name
+        print("\nMean Scores by Company Name:")
+        print(df.groupby('comp_name')['Score'].mean())
+
+        # Mean scores by comp_type
+        print("\nMean Scores by Company Type:")
+        print(df.groupby('comp_type')['Score'].mean())
+
+generate_desc_stats()
