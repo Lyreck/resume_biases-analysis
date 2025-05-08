@@ -263,8 +263,10 @@ def generate_desc_stats(name=True, job=True, volunteering=True):
         print(df.groupby('british')['Score'].mean())
         print("\nMean Scores Overall:")
         print(df['Score'].mean())
-        print("\nMean Scores by Job Posting:")
-        print(df.groupby('job_type')['Score'].mean())
+        print("\nMean Scores by Company Name:")
+        print(df.groupby('comp_name')['Score'].mean())
+        print("\nMean Scores by Company Type:")
+        print(df.groupby('comp_type')['Score'].mean())
 
     if job:
         print("\n=== Descriptive Statistics for Job ===")
@@ -278,10 +280,6 @@ def generate_desc_stats(name=True, job=True, volunteering=True):
         print("\nMean Scores by Company Name:")
         print(df.groupby('comp_name')['Score'].mean())
 
-        # Mean scores by job_posting
-        print("\nMean Scores by Job Posting:")
-        print(df.groupby('comp_name')['Score'].mean())
-
     if volunteering:
         print("\n=== Descriptive Statistics for Volunteering ===")
         df = concatenate_dataframes_with_jobtype("data/scores_experiments/volunteering/")
@@ -289,10 +287,6 @@ def generate_desc_stats(name=True, job=True, volunteering=True):
         # Mean scores by association
         print("Mean Scores by Association:")
         print(df.groupby('association')['Score'].mean())
-
-        # Mean scores by job_posting
-        print("\nMean Scores by Job Posting:")
-        print(df.groupby('comp_name')['Score'].mean())
 
         # Mean scores by comp_name
         print("\nMean Scores by Company Name:")
@@ -302,4 +296,7 @@ def generate_desc_stats(name=True, job=True, volunteering=True):
         print("\nMean Scores by Company Type:")
         print(df.groupby('comp_type')['Score'].mean())
 
-generate_desc_stats()
+if __name__ == "__main__":
+    # Example usage
+    generate_graphs(name=False, job=True, volunteering=True)
+    generate_desc_stats()
