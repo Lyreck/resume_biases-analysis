@@ -54,6 +54,9 @@ def generate_graphs(df):
     #    if col not in df.columns:
     #        raise ValueError(f"Column '{col}' is missing in the DataFrame.")
 
+    # Ensure the output directories exist
+    os.makedirs("graphs/name", exist_ok=True)
+
     # 1. Mean scores for adapted == 1 and adapted == 0 per job type
     adapted_scores = df.groupby(['job_type', 'adapted'])['Score'].mean().unstack()
     adapted_scores.plot(kind='bar', figsize=(10, 6), title="Mean Scores by Adapted Status and Job Type")
@@ -113,6 +116,6 @@ def generate_graphs(df):
     # 
     # clivant vs non clivant - jobtype and gender   
 
-folder_path = "data/name/"
+folder_path = "data/scores_experiments/name/"
 df = concatenate_dataframes_with_jobtype(folder_path)
 generate_graphs(df)
