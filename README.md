@@ -1,3 +1,5 @@
+See the project's paper here: https://pouvoirdasha.github.io/Decoding_Biases_in_Resume_Matcher/
+
 # Installation
 
 /!\ To clone the repository properly, please ensure you clone **recursively**. Otherwise, Resume-Matcher will not be copied properly.
