@@ -198,7 +198,7 @@ def generate_graphs(name = True, job = True, volunteering = True):
         adapted_scores.plot(kind='bar', figsize=(10, 6),color = adapt_colors, title="Mean Scores by Adapted Status and Job Type")
         plt.ylabel("Mean Score")
         plt.xlabel("Job Type")
-        plt.legend(title="Mean compatibility scores by adapted resume status and job type")
+        plt.title("Mean compatibility scores by adapted resume status and job type")
         plt.tight_layout()
         plt.savefig("graphs/volunteering/mean_scores_adapted_vs_not_adapted_per_jobtype.png")
         plt.show()
@@ -210,6 +210,25 @@ def generate_graphs(name = True, job = True, volunteering = True):
         plt.tight_layout()
         plt.savefig("graphs/volunteering/mean_scores_by_association.png")
         plt.show()
+
+        ideology_scores = df.groupby('ideology')['Score'].mean()
+        ideology_scores.plot(kind='bar', figsize=(10, 6), color=[green_color, orange_color, color4], title="Mean Scores by Ideology type (0 = neutral, 1 = political, 2 = religious)")
+        plt.ylabel("Mean Score")
+        plt.xlabel("Ideology type")
+        plt.tight_layout()
+        plt.savefig("graphs/volunteering/mean_scores_by_ideology.png")
+        plt.show()
+
+        ideology_scores_per_job = df.groupby(['job_type', 'ideology'])['Score'].mean().unstack()
+        ideology_scores_per_job.plot(kind='bar', figsize=(10, 6),color = [green_color, orange_color, color4], title="Mean Scores by Ideological affiliation and Job Type")
+        plt.ylabel("Mean Score")
+        plt.xlabel("Job Type")
+        plt.title("Mean compatibility scores by Ideological affiliation and job type")
+        plt.tight_layout()
+        plt.savefig("graphs/volunteering/mean_scores_ideology_per_jobtype.png")
+        plt.show()
+
+
 
 
 
@@ -288,6 +307,9 @@ def generate_desc_stats(name=True, job=True, volunteering=True):
         print("Mean Scores by Association:")
         print(df.groupby('association')['Score'].mean())
 
+        print("Mean Scores by Ideology affiliation type:")
+        print(df.groupby('ideology')['Score'].mean())
+
         # Mean scores by comp_name
         print("\nMean Scores by Company Name:")
         print(df.groupby('comp_name')['Score'].mean())
@@ -298,5 +320,7 @@ def generate_desc_stats(name=True, job=True, volunteering=True):
 
 if __name__ == "__main__":
     # Example usage
-    generate_graphs(name=False, job=True, volunteering=True)
-    generate_desc_stats()
+    #generate_graphs(name=False, job=False, volunteering=True)
+    generate_desc_stats(name = False, job = False, volunteering=True)
+    #df = concatenate_dataframes_with_jobtype("data/scores_experiments/name/")
+    #print(df.columns)
