@@ -6,6 +6,8 @@ import seaborn as sns
 import os
 from scipy.stats import ttest_ind
 from example_data_analysis import load_and_process_data_files 
+from scipy.stats import f_oneway
+
 
 #take a folder and concaenate all the dataames from one experience and add a column for jobtype ! 
 def concatenate_dataframes_with_jobtype(folder_path):
@@ -297,6 +299,27 @@ def generate_desc_stats(name=True, job=True, volunteering=True):
         print("\nMean Scores by Company Type:")
         print(df.groupby('comp_type')['Score'].mean())
 
+        for job_type, group in df.groupby('job_type'):
+            print(f"\n--- T-tests for job_type: {job_type} ---")
+
+            # T-test for gender
+            scores_m = group[group['gender'] == 'M']['Score']
+            scores_f = group[group['gender'] == 'F']['Score']
+            if len(scores_m) > 1 and len(scores_f) > 1:
+                t_stat, p_val = ttest_ind(scores_m, scores_f, nan_policy='omit')
+                print(f"Gender t-test: t={t_stat:.3f}, p={p_val:.3f}")
+            else:
+                print("Not enough data for gender t-test.")
+
+            # T-test for British status
+            scores_0 = group[group['british'] == 0]['Score']
+            scores_1 = group[group['british'] == 1]['Score']
+            if len(scores_0) > 1 and len(scores_1) > 1:
+                t_stat, p_val = ttest_ind(scores_0, scores_1, nan_policy='omit')
+                print(f"British status t-test: t={t_stat:.3f}, p={p_val:.3f}")
+            else:
+                print("Not enough data for British status t-test.")
+
     if job:
         print("\n=== Descriptive Statistics for Job ===")
         df = concatenate_dataframes_with_jobtype("data/scores_experiments/job/")
@@ -308,6 +331,31 @@ def generate_desc_stats(name=True, job=True, volunteering=True):
         # Mean scores by comp_name
         print("\nMean Scores by Company Name:")
         print(df.groupby('comp_name')['Score'].mean())
+
+
+        
+        # t-test for clivant
+        print("\nT-test for clivant resumes:")
+        scores0 = df[df['clivant'] == 0]['Score']
+        scores1 = df[df['clivant'] == 1]['Score']
+        if len(scores0) > 1 and len(scores1) > 1:
+            t_stat, p_val = ttest_ind(scores0, scores1, nan_policy='omit')
+            print(f"t={t_stat:.3f}, p={p_val:.3f}")
+        else:
+            print("Not enough data for t-test on clivant.")
+
+        # ANOVA for comp_type
+        print("\nANOVA on comp_type:")
+        groups = [g['Score'].values for _, g in df.groupby('comp_type')]
+        if all(len(g) > 1 for g in groups):
+            f_stat, p_val = f_oneway(*groups)
+            print(f"ANOVA F={f_stat:.3f}, p={p_val:.3f}")
+        else:
+            print("Not enough data for ANOVA on comp_type.")
+
+
+
+        
 
     if volunteering:
         print("\n=== Descriptive Statistics for Volunteering ===")
@@ -331,10 +379,45 @@ def generate_desc_stats(name=True, job=True, volunteering=True):
         print(df.groupby('comp_type')['Score'].mean())
 
 
+        print("\nANOVA on ideology (overall):")
+        groups = [g['Score'].values for _, g in df.groupby('ideology')]
+        if all(len(g) > 1 for g in groups):
+            f_stat, p_val = f_oneway(*groups)
+            print(f"ANOVA F={f_stat:.3f}, p={p_val:.3f}")
+        else:
+            print("Not enough data for ANOVA on ideology (overall)")
+
+
+        print("\nT-test for adapted resumes:")
+        scores0 = df[df['adapted'] == 0]['Score']
+        scores1 = df[df['adapted'] == 1]['Score']
+        if len(scores0) > 1 and len(scores1) > 1:
+            t_stat, p_val = ttest_ind(scores0, scores1, nan_policy='omit')
+            print(f"t={t_stat:.3f}, p={p_val:.3f}")
+        else:
+            print("Not enough data for t-test on adapted.")
+
+
+        for adapted_val in [0, 1]:
+            print(f"\nANOVA on ideology for adapted == {adapted_val}:")
+            sub = df[df['adapted'] == adapted_val]
+            groups = [g['Score'].values for _, g in sub.groupby('ideology')]
+            if all(len(g) > 1 for g in groups):
+                f_stat, p_val = f_oneway(*groups)
+                print(f"ANOVA F={f_stat:.3f}, p={p_val:.3f}")
+            else:
+                print("Not enough data for ANOVA on ideology (adapted == {adapted_val})")
+
+        
+
+
 
 if __name__ == "__main__":
     # Example usage
     #generate_graphs(name=False, job=False, volunteering=True)
-    generate_desc_stats(name = False, job = False, volunteering=True)
-    #df = concatenate_dataframes_with_jobtype("data/scores_experiments/name/")
+    #generate_desc_stats(name = False, job = True, volunteering=True)
+    df = concatenate_dataframes_with_jobtype("data/scores_experiments/name/")
+    
+   
+   
     #print(df.columns)
