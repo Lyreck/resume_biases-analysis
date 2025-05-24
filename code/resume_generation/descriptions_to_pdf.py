@@ -1,14 +1,7 @@
 ### In this code, we build the functions to take a set of selected descriptions (job, name, association...) and put them in a given .tex format. ###
 ### The function then outputs a .pdf file which will be analyzed in the next step (cv_job_parsing). ################################################
-### We also generate a hash for each pdf file for quck identification, as well as create databases to make our analysis. ###########################
-
-
-## We're changing:
-# Name
-# email adress, linkedin, github
-# professional experience
-# volunteering experience
-# changing "%" in "\%" when % does not start a line
+### The name of the pdf resume file is built as follows: name + surname + company_name + association_name .pdf. This allows for a **unique** name for each resume.
+### Other functions allow us to create databases to make our analysis. ###########################
 
 
 from utils.process_markdown_description import process_markdown_job, process_markdown_association
@@ -88,14 +81,16 @@ def insert_descriptions_to_pdf(name, company_name, job_desc, association_name, a
 
     # Compile the .tex file into a PDF using pdflatex
     try:
-        # subprocess.run(["pdflatex", "-output-directory", out_directory, resume_filename + ".tex"], check=True) # with verbose
-        with open(os.devnull, 'w') as devnull: #without verbose
-            subprocess.run(
-                ["pdflatex", "-output-directory", out_directory, resume_filename + ".tex"],
-                stdout=devnull,  # Suppress standard output
-                stderr=devnull,  # Suppress error output
-                check=True
-            )
+        if verbose:
+          subprocess.run(["pdflatex", "-output-directory", out_directory, resume_filename + ".tex"], check=True) # with verbose
+        else:
+          with open(os.devnull, 'w') as devnull: #without verbose
+              subprocess.run(
+                  ["pdflatex", "-output-directory", out_directory, resume_filename + ".tex"],
+                  stdout=devnull,  # Suppress standard output
+                  stderr=devnull,  # Suppress error output
+                  check=True
+              )
         if verbose:
           print(f"PDF generated successfully: {os.path.join(out_directory, resume_filename + '.pdf')}")
     except subprocess.CalledProcessError as e:
@@ -124,6 +119,7 @@ if __name__ == "__main__":
     association_name="African Impact"
     association_desc = "**Volunteering Experience at African Impact** - Dedicated over 100 hours to African Impact, a leading volunteer organization in Africa. - Assisted in community development projects, including education and conservation efforts. - Collaborated with local teams to implement sustainable initiatives that positively impacted rural communities. - Facilitated educational workshops for children, enhancing their learning experiences and fostering a love for education. - Participated in environmental conservation activities such as tree planting and beach clean-ups, promoting ecological sustainability. - Engaged with diverse cultural groups, gaining valuable insights into African traditions and lifestyles while contributing to meaningful community projects. "
     field_of_study = "Computer Science"
+    resume_filename = name + company_name + association_name
     #generate resume in .pdf format
-    insert_descriptions_to_pdf(name, company_name, comp_desc, association_name, association_desc, field_of_study, out_directory="data/generated_resumes")
+    insert_descriptions_to_pdf(name, company_name, comp_desc, association_name, association_desc, field_of_study, out_directory="data/generated_resumes", resume_filename=resume_filename, verbose=True)
     

@@ -10,22 +10,23 @@ def create_resume_database(data_decoding, data_desc, to_csv=False):
     It processes the data to extract relevant information and combines it into a final DataFrame.
     
     Args:
-        data_decoding (pd.DataFrame): DataFrame containing CV data.
-        data_desc (pd.DataFrame): DataFrame containing job descriptions.
+        data_decoding (pd.DataFrame): DataFrame containing CV data? Columns should contain: name,surname,british,volunteering,gender,tech_comp,med_comp,educ_comp,field_study
+        data_desc (pd.DataFrame): DataFrame containing job descriptions. They are generated using company and associatino names, using the LLM.
         
     Returns:
-        pd.DataFrame: Final combined DataFrame with names, demographics, experience, and volunteering information.
+        pd.DataFrame: Final combined DataFrame with everything needed for data analysis and resume generation. Columns: name,surname,british,gender,association,vol_desc,comp_type,comp_name,job_desc,field_of_study,key
+
+
     """
     #creating database only with job descriptions 
-    #separation at line 112 
+    #separation at line 112 (between companies and associations)
     #data_desc = data_desc[data_desc['description'].str.contains("Job Experience", case=False, na=False)]
 
     #creating database only with job descriptions and only with volunteering decriptions 
-    #separation at line 112 
+    #separation at line 112 (between companies and associations)
 
 
     experience_desc = data_desc[data_desc['description'].str.contains("Job Experience", case=False, na=False)]
-    #print(experience_desc)
 
     #creating experience database - column from med_comp, tech_comp and educ_comp columns 
 
@@ -45,18 +46,14 @@ def create_resume_database(data_decoding, data_desc, to_csv=False):
     #deleting all the lines that contain NONE in the company column
     experience_type = experience_type[~experience_type['company'].str.contains("NO PREVIOUS EXPERIENCE", case=False, na=False)]
 
-    #print(experience_type)
-
 
     #merging experience and experience_desc databases 
-
     experience = pd.merge( experience_type, experience_desc, left_on='company', right_on= 'comp_name', how='left') #outer?
     experience.drop_duplicates(subset=['nb'], inplace=True) 
 
     #deleting columns that are not useful anymore and renaming columns for clarity
     experience = experience.drop(columns = ['nb', 'company', 'ideology'])
     experience = experience.rename(columns={ "description": "job_desc"})
-    #print(experience)
 
     #creating volunteering database 
     volunteering = data_desc[data_desc['description'].str.contains("volunteering experience", case=False, na=False)]
@@ -66,7 +63,7 @@ def create_resume_database(data_decoding, data_desc, to_csv=False):
 
 
 
-    #creating names and demogrphics database  
+    #creating names and demographics database  
 
     data_names = data_decoding[['name', 'surname', 'british','gender']].copy()
 
@@ -75,15 +72,12 @@ def create_resume_database(data_decoding, data_desc, to_csv=False):
     data_names['surname'] = data_names['surname'].str.capitalize()
 
     # Change "british" and "gender" to integer
-    
     data_names['british'] = data_names['british'].astype(int)
     data_names['gender'] = data_names['gender'].astype(int)
 
-    #print(data_names.head())
-
 
     #joining final database : names, demographics experience and volunteering : 
-    #creating all the possible combinations 
+    #creating all the possible combinations (there might be a a lot)
     data_name_exp = data_names.merge(volunteering, how = "cross")
     data_for_generation = data_name_exp.merge(experience, how ='cross')
 
@@ -93,6 +87,7 @@ def create_resume_database(data_decoding, data_desc, to_csv=False):
                                             np.where(data_for_generation['comp_type'] == 'tech_comp', 'Computer Science',
                                                     np.where(data_for_generation['comp_type'] == 'med_comp', 'Medicine', None)))
 
+    #keys to identify each resume uniquely (name + surname + comp_name + association_name)
     keys = [name + surname + comp_name + association_name for name, surname, comp_name, association_name in zip(
         data_for_generation['name'],
         data_for_generation['surname'],
@@ -106,8 +101,9 @@ def create_resume_database(data_decoding, data_desc, to_csv=False):
 
     return data_for_generation
 
+
 if __name__ == "__main__":
-    # generate the database with keys.
+    # Example usage. Generate the database with keys.
     data_decoding=pd.read_csv('data/data_decoding.csv')
     data_desc=pd.read_csv('data/data_desc.csv')
 
