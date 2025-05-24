@@ -1,6 +1,6 @@
 import sys
 
-from code.resume_generation.snippet_generation import generate_descriptions
+from code import resume_generation
 # en gros dans le init je mets direct les packages que je veux importer :)))))))))))
 
 if __name__ == "__main__":
