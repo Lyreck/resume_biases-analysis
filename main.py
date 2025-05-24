@@ -1,6 +1,6 @@
 import sys
 
-from code import resume_generation
+from scripts import resume_generation
 # en gros dans le init je mets direct les packages que je veux importer :)))))))))))
 
 if __name__ == "__main__":
