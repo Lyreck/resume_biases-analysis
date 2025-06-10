@@ -8,7 +8,7 @@ import os
 # from scripts import JobDescriptionProcessor, ResumeProcessor #old version from Resume_Matcher, not working here ??
 from scripts.ResumeProcessor import ResumeProcessor
 from scripts.JobDescriptionProcessor import JobDescriptionProcessor
-from scripts.utils import get_filenames_from_dir, init_logging_config
+from code.utils import get_filenames_from_dir, init_logging_config
 
 init_logging_config()
 

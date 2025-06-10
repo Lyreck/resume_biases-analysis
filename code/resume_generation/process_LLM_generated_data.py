@@ -32,7 +32,7 @@ def process_file(input_file, output_file, keywords):
 
 if __name__ == "__main__":
     names = pd.read_csv("data/names_clean.csv", 
-                    names=["Name", "Surname", "Associations", "Gender", "Tech_comp", "Med_comp", "Edu_comp"])
+                    names=["Name", "Surname", "Associations", "Gender", "Tech_comp", "Med_comp", "Edu_comp"]) ##MIGHT HAVE CHANGED DUE TO INTRODUCTION OF STUDY FIELD.
 
     associations = names["Associations"].dropna().drop_duplicates().tolist()
     comps_tech = names["Tech_comp"].dropna().drop_duplicates().tolist()#.to_list()

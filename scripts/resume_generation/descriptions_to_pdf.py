@@ -4,7 +4,7 @@
 ### Other functions allow us to create databases to make our analysis. ###########################
 
 
-from utils.process_markdown_description import process_markdown_job, process_markdown_association
+from .utils.process_markdown_description import process_markdown_job, process_markdown_association
 import os
 import subprocess
 

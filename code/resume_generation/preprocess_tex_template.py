@@ -1,7 +1,7 @@
 ####### This code allows to take as an input a normal .tex file and output a .tex file that allows us to use Python to input data in the template.
 ####### What it does is:
 #######  1. Escape percent signs that are not at the start of a line (to avoid commenting some text that has "10% of ...", for example).
-####### 2. double the curly braces, so that we can use them as placeholders for Python variables.
+#######  2. double the curly braces, so that we can use them as placeholders for Python variables.
 
 from utils.double_placeholders import double_placeholders
 from utils.process_percentages import escape_percent_in_tex
