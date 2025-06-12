@@ -1,5 +1,0 @@
-2025-05-05 12:17:46,911 (pdf_to_json.py:60) - INFO: Started to read from Data/Resumes
-2025-05-05 12:17:46,916 (pdf_to_json.py:36) - INFO: Deleted old files from /Users/lld/Desktop/Ecole/SciencesPo/S2/biases_in_AI/group-project/resume_biases-analysis/code/cv_job_parsing/Data/Processed/Resumes
-2025-05-05 12:17:46,917 (pdf_to_json.py:74) - ERROR: There are no resumes present in the specified folder.
-2025-05-05 12:17:46,917 (pdf_to_json.py:75) - ERROR: Exiting from the program.
-2025-05-05 12:17:46,917 (pdf_to_json.py:76) - ERROR: Please add resumes in the Data/Resumes folder and try again.
