@@ -1,9 +1,15 @@
 import pandas as pd
 import os 
 from random import choice, randint
+import logging
 
 from ollama import chat
 from ollama import ChatResponse
+
+# Get the logger
+logger = logging.getLogger(__name__)
+# Set the logging level
+logger.setLevel(logging.INFO)
 
 
 def generate(prompt):
@@ -24,7 +30,7 @@ def generate_descriptions(comps_tech, comps_med, comps_edu, associations, out_fi
 
     with open(f'out_files/{out_filename}.csv','w') as file:
 
-        # LOG HERE: START OF GENERATION
+        logger.info("Starting the generation of descriptions for companies and associations.")
 
         if tech: 
             for i,_ in comps_tech.iterrows(): #add progress bar
@@ -42,6 +48,7 @@ def generate_descriptions(comps_tech, comps_med, comps_edu, associations, out_fi
 
                 file.write(comp + "," + output)
                 file.write('\n')
+            logger.info("Descriptions for tech companies generated.")
 
         if med: 
             for i,_ in comps_med.iterrows():
@@ -59,6 +66,7 @@ def generate_descriptions(comps_tech, comps_med, comps_edu, associations, out_fi
 
                 file.write(comp + "," + output)
                 file.write('\n')
+            logger.info("Descriptions for medical companies generated.")
 
         if edu:
             for i,_ in comps_edu.iterrows():
@@ -76,6 +84,7 @@ def generate_descriptions(comps_tech, comps_med, comps_edu, associations, out_fi
 
                 file.write(comp + "," + output)
                 file.write('\n')
+            logger.info("Descriptions for education-related companies generated.")
 
         if asso:
             for i,_ in associations.iterrows():
@@ -93,8 +102,9 @@ def generate_descriptions(comps_tech, comps_med, comps_edu, associations, out_fi
 
                 file.write(volun + "," + output)
                 file.write('\n')
+            logger.info("Descriptions for associations generated.")
 
-        # LOG HERE: END OF GENERATION.
+        logger.info("Descriptions for companies and associations generated successfully.")
 
 
 
