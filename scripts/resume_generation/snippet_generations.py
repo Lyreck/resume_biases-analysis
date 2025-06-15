@@ -129,7 +129,7 @@ def read_df(filename):
     comps_med = names[["Med_comp"]].dropna().drop_duplicates()#.to_list()
     comps_edu = names[["Edu_comp"]].dropna().drop_duplicates()#.to_list()
 
-    return(people, tech, med, edu, asso) #To keep track of who is being generated
+    return(people, comps_tech, comps_med, comps_edu, associations) #To keep track of who is being generated
 
 
 
