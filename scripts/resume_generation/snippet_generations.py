@@ -33,9 +33,10 @@ def generate_descriptions(comps_tech, comps_med, comps_edu, associations, out_fi
         logger.info("Starting the generation of descriptions for companies and associations.")
 
         if tech: 
-            for i,_ in comps_tech.iterrows(): #add progress bar
-                comp = comps_tech.iloc[i]["Tech_comp"]
-                # print(comp)
+            for comp in comps_tech["Tech_comp"]:
+            #for i,_ in comps_tech.iterrows(): #add progress bar
+                #comp = comps_tech.iloc[i]["Tech_comp"]
+                print(comp)
                 prompt = f"""
                 You are a resume section generator. I will give
                 you a characteristic. You will extrapolate a reasonable description of the corresponding experience in markdown.
