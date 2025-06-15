@@ -129,20 +129,8 @@ def read_df(filename):
     comps_med = names[["Med_comp"]].dropna().drop_duplicates()#.to_list()
     comps_edu = names[["Edu_comp"]].dropna().drop_duplicates()#.to_list()
 
-    return(people, comps_tech, comps_med, comps_edu, associations) #To keep track of who is being generated
+    return people, comps_tech, comps_med, comps_edu, associations #To keep track of who is being generated
 
-
-
-"""
-Here is the information of the person:
-Name: {people[0]}
-Surname: {people[1]}
-Gender: {people[2]}
-Association: {association}
-Company: {comp}
-Location: United Kindgom
-Email: {people[0]}.{people[1]}@gmail.com
-LinkedIn: linkedin.com/in/{people[0]}{people[1]}"""
 
 
  
