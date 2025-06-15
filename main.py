@@ -1,6 +1,8 @@
 import sys
 import pandas as pd
 
+#est-ce que le logger marche vrmt ? dans quel file ?
+
 from scripts import resume_generation
 # en gros dans le init je mets direct les packages que je veux importer :)))))))))))
 
