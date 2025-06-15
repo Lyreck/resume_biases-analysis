@@ -33,9 +33,7 @@ def generate_descriptions(comps_tech, comps_med, comps_edu, associations, out_fi
         logger.info("Starting the generation of descriptions for companies and associations.")
 
         if tech: 
-            for comp in comps_tech["Tech_comp"]:
-            #for i,_ in comps_tech.iterrows(): #add progress bar
-                #comp = comps_tech.iloc[i]["Tech_comp"]
+            for comp in comps_tech["Tech_comp"]: #add progress bar
                 print(comp)
                 prompt = f"""
                 You are a resume section generator. I will give
@@ -52,8 +50,7 @@ def generate_descriptions(comps_tech, comps_med, comps_edu, associations, out_fi
             logger.info("Descriptions for tech companies generated.")
 
         if med: 
-            for i,_ in comps_med.iterrows():
-                comp = comps_med.iloc[i]["Med_comp"]
+            for comp in comps_med["Med_comp"]:
                 # print(comp)
                 prompt = f"""
                 You are a resume section generator. I will give
@@ -70,8 +67,7 @@ def generate_descriptions(comps_tech, comps_med, comps_edu, associations, out_fi
             logger.info("Descriptions for medical companies generated.")
 
         if edu:
-            for i,_ in comps_edu.iterrows():
-                comp = comps_edu.iloc[i]["Edu_comp"]
+            for comp in comps_edu["Edu_comp"]:
                 # print(comp)
                 prompt = f"""
                 You are a resume section generator. I will give
@@ -88,8 +84,7 @@ def generate_descriptions(comps_tech, comps_med, comps_edu, associations, out_fi
             logger.info("Descriptions for education-related companies generated.")
 
         if asso:
-            for i,_ in associations.iterrows():
-                volun = associations.iloc[i]["Associations"]
+            for volun in associations["Associations"]:
                 # print(volun)
                 prompt = f"""
                 You are a resume section generator. I will give
