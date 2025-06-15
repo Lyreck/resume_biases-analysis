@@ -16,18 +16,20 @@ def generate(prompt):
 
     return response.message.content
 
-def generate_descriptions(comps_tech, comps_med, comps_edu, associations, tech=True, med=True, edu=True, asso=True):
+def generate_descriptions(comps_tech, comps_med, comps_edu, associations, out_filename="default", tech=True, med=True, edu=True, asso=True):
     """
     Function to generate descriptions for the different types of companies and associations, using mistral-small 3 and ollama.
     ollama and mistral-small 3 need to be installed locally.
     """
 
-    with open('out_files/out2.csv','w') as file:
+    with open(f'out_files/{out_filename}.csv','w') as file:
+
+        # LOG HERE: START OF GENERATION
 
         if tech: 
-            for i,_ in comps_tech.iterrows():
+            for i,_ in comps_tech.iterrows(): #add progress bar
                 comp = comps_tech.iloc[i]["Tech_comp"]
-                print(comp)
+                # print(comp)
                 prompt = f"""
                 You are a resume section generator. I will give
                 you a characteristic. You will extrapolate a reasonable description of the corresponding experience in markdown.
@@ -44,7 +46,7 @@ def generate_descriptions(comps_tech, comps_med, comps_edu, associations, tech=T
         if med: 
             for i,_ in comps_med.iterrows():
                 comp = comps_med.iloc[i]["Med_comp"]
-                print(comp)
+                # print(comp)
                 prompt = f"""
                 You are a resume section generator. I will give
                 you a characteristic. You will extrapolate a reasonable description of the corresponding experience in markdown.
@@ -61,7 +63,7 @@ def generate_descriptions(comps_tech, comps_med, comps_edu, associations, tech=T
         if edu:
             for i,_ in comps_edu.iterrows():
                 comp = comps_edu.iloc[i]["Edu_comp"]
-                print(comp)
+                # print(comp)
                 prompt = f"""
                 You are a resume section generator. I will give
                 you a characteristic. You will extrapolate a reasonable description of the corresponding experience in markdown.
@@ -78,7 +80,7 @@ def generate_descriptions(comps_tech, comps_med, comps_edu, associations, tech=T
         if asso:
             for i,_ in associations.iterrows():
                 volun = associations.iloc[i]["Associations"]
-                print(volun)
+                # print(volun)
                 prompt = f"""
                 You are a resume section generator. I will give
                 you a characteristic. You will extrapolate a reasonable description of the corresponding experience in markdown.
@@ -92,8 +94,32 @@ def generate_descriptions(comps_tech, comps_med, comps_edu, associations, tech=T
                 file.write(volun + "," + output)
                 file.write('\n')
 
+        # LOG HERE: END OF GENERATION.
 
 
+
+def read_df(filename):
+    """
+    filename (str): name of the file to read. Should be located in the "data" folder.
+
+    Returns:
+        names (pd.DataFrame): DataFrame containing the names, surnames and gender of every person in the dataset
+        Tech, med and edu companies, as well as association names.
+    """
+    
+
+    
+    names = pd.read_csv("data/names_clean.csv", 
+                    names=["Name", "Surname", "Associations", "Gender", "Tech_comp", "Med_comp", "Edu_comp"])
+
+    people = names[["Name", "Surname", "Gender"]].dropna()#.to_list()
+    associations = names[["Associations"]].dropna()#.to_list()
+
+    comps_tech = names[["Tech_comp"]].dropna().drop_duplicates()#.to_list()
+    comps_med = names[["Med_comp"]].dropna().drop_duplicates()#.to_list()
+    comps_edu = names[["Edu_comp"]].dropna().drop_duplicates()#.to_list()
+
+    return(people, tech, med, edu, asso) #To keep track of who is being generated
 
 
 
