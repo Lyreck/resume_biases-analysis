@@ -6,10 +6,14 @@ import logging
 from ollama import chat
 from ollama import ChatResponse
 
-# Get the logger
-logger = logging.getLogger(__name__)
-# Set the logging level
-logger.setLevel(logging.INFO)
+from ..utils import init_logging_config
+# Initialize logging configuration
+init_logging_config(filename='snippet_generations.log')
+
+# # Get the logger
+# logger = logging.getLogger(__name__)
+# # Set the logging level
+# logger.setLevel(logging.INFO)
 
 
 def generate(prompt):
@@ -30,7 +34,7 @@ def generate_descriptions(comps_tech, comps_med, comps_edu, associations, out_fi
 
     with open(f'out_files/{out_filename}.csv','w') as file:
 
-        logger.info("Starting the generation of descriptions for companies and associations.")
+        logging.info("Starting the generation of descriptions for companies and associations.")
 
         if tech: 
             for comp in comps_tech["Tech_comp"]: #add progress bar
@@ -47,7 +51,7 @@ def generate_descriptions(comps_tech, comps_med, comps_edu, associations, out_fi
 
                 file.write(comp + "," + output)
                 file.write('\n')
-            logger.info("Descriptions for tech companies generated.")
+            logging.info("Descriptions for tech companies generated.")
 
         if med: 
             for comp in comps_med["Med_comp"]:
@@ -64,7 +68,7 @@ def generate_descriptions(comps_tech, comps_med, comps_edu, associations, out_fi
 
                 file.write(comp + "," + output)
                 file.write('\n')
-            logger.info("Descriptions for medical companies generated.")
+            logging.info("Descriptions for medical companies generated.")
 
         if edu:
             for comp in comps_edu["Edu_comp"]:
@@ -81,7 +85,7 @@ def generate_descriptions(comps_tech, comps_med, comps_edu, associations, out_fi
 
                 file.write(comp + "," + output)
                 file.write('\n')
-            logger.info("Descriptions for education-related companies generated.")
+            logging.info("Descriptions for education-related companies generated.")
 
         if asso:
             for volun in associations["Associations"]:
@@ -98,9 +102,9 @@ def generate_descriptions(comps_tech, comps_med, comps_edu, associations, out_fi
 
                 file.write(volun + "," + output)
                 file.write('\n')
-            logger.info("Descriptions for associations generated.")
+            logging.info("Descriptions for associations generated.")
 
-        logger.info("Descriptions for companies and associations generated successfully.")
+        logging.info("Descriptions for companies and associations generated successfully.")
 
 
 
