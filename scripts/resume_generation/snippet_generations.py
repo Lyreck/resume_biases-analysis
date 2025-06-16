@@ -21,11 +21,15 @@ def generate(prompt):
 
     return response.message.content
 
-def generate_descriptions(comps_tech, comps_med, comps_edu, associations, out_filename="default", tech=True, med=True, edu=True, asso=True):
+def generate_descriptions(source_data_filename, out_filename="default", tech=True, med=True, edu=True, asso=True):
     """
     Function to generate descriptions for the different types of companies and associations, using mistral-small 3 and ollama.
     ollama and mistral-small 3 need to be installed locally.
     """
+
+    logging.info(f"Fetching data from source file {source_data_filename}.csv...")
+    people, comps_tech, comps_med, comps_edu, associations = read_df(source_data_filename)
+    logging.info("Data fetched successfully.")
 
     with open(f'out_files/{out_filename}.csv','w') as file:
 

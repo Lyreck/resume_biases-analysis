@@ -7,7 +7,7 @@ logger.setLevel(logging.INFO)
 logger.info("Importing Resume Generation Functions...")
 
 ##  LLM generation of snippets and post-processing
-from .snippet_generations import generate_descriptions, read_df
+from .snippet_generations import generate_descriptions
 from .process_LLM_generated_data import process_file #have to check if I eventually use it.
 
 ## .tex code and PDF creation 

@@ -97,7 +97,7 @@ def create_resume_database(data_decoding, data_desc, out_filename='database_all_
     data_for_generation['key'] = keys
 
     if to_csv:
-        data_for_generation.to_csv(out_filename+".csv", index=False)
+        data_for_generation.to_csv("data/" + out_filename+".csv", index=False)
 
     return data_for_generation
 
