@@ -115,7 +115,7 @@ def read_df(filename):
     
 
     
-    names = pd.read_csv("data/names_clean.csv", 
+    names = pd.read_csv(f"data/{filename}.csv", 
                     names=["Name", "Surname", "Associations", "Gender", "Tech_comp", "Med_comp", "Edu_comp"])
 
     people = names[["Name", "Surname", "Gender"]].dropna()#.to_list()
