@@ -149,6 +149,6 @@ def init_logging_config(
     logger.addHandler(stderr_handler)
     logger.addHandler(file_handler)
 
-    # Remove logging messages from ollama
+    # Remove logging messages from ollama (does not work as of today)
     logging.getLogger("ollama._client").setLevel(logging.WARNING)
     logging.getLogger("_client").setLevel(logging.WARNING)

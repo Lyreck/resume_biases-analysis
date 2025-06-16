@@ -9,8 +9,6 @@ from ollama import ChatResponse
 import logging
 logger = logging.getLogger(__name__)
 
-loggers = [logging.getLogger(name) for name in logging.root.manager.loggerDict]
-print(loggers)
 
 
 def generate(prompt):
@@ -31,7 +29,8 @@ def generate_descriptions(comps_tech, comps_med, comps_edu, associations, out_fi
 
     with open(f'out_files/{out_filename}.csv','w') as file:
 
-        logging.info("Starting the generation of descriptions for companies and associations.")
+        logging.info("Starting the generation of descriptions for companies and associations with mistral-small (might take a while).")
+        logging.info("Note: running the LLM locally requires at least 16GB of GPU RAM.")
 
         if tech: 
             for comp in comps_tech["Tech_comp"]: #add progress bar
