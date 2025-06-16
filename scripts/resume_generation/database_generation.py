@@ -2,6 +2,7 @@
 import pandas as pd 
 import numpy as np
 import re 
+import os
 
 
 def create_resume_database(data_decoding, data_desc, out_filename='database_all_cv_combinations_with_keys', to_csv=False):
@@ -97,7 +98,9 @@ def create_resume_database(data_decoding, data_desc, out_filename='database_all_
     data_for_generation['key'] = keys
 
     if to_csv:
-        data_for_generation.to_csv("data/" + out_filename+".csv", index=False)
+        data_path = os.path.join(os.path.dirname(__file__), "data", f"{out_filename}.csv")
+        data_path = os.path.abspath(data_path)
+        data_for_generation.to_csv(data_path, index=False)
 
     return data_for_generation
 

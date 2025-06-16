@@ -47,4 +47,4 @@ if __name__ == "__main__":
     logging.info("Creating unified resume database")
     database_name = "unified_database" #this should go to parameters and I have to think of a good name
     data_for_generation = resume_generation.create_resume_database(data_decoding, data_desc, out_filename="unified_database", to_csv=True)
-    logging.info(f"Database created successfully at data/{database_name}.csv")
+    logging.info(f"Database created successfully at scripts/resume_generation/data/{database_name}.csv")
