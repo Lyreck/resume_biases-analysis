@@ -4,7 +4,7 @@ import numpy as np
 import re 
 
 
-def create_resume_database(data_decoding, data_desc, to_csv=False):
+def create_resume_database(data_decoding, data_desc, out_filename='database_all_cv_combinations_with_keys', to_csv=False):
     """
     This function creates a database from the given data_decoding and data_desc DataFrames.
     It processes the data to extract relevant information and combines it into a final DataFrame.
@@ -97,7 +97,7 @@ def create_resume_database(data_decoding, data_desc, to_csv=False):
     data_for_generation['key'] = keys
 
     if to_csv:
-        data_for_generation.to_csv('database_all_cv_combinations_with_keys.csv', index=False)
+        data_for_generation.to_csv(out_filename+".csv", index=False)
 
     return data_for_generation
 
