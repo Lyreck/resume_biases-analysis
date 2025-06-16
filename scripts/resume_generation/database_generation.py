@@ -11,8 +11,8 @@ def create_resume_database(data_decoding, data_desc, out_filename='database_all_
     It processes the data to extract relevant information and combines it into a final DataFrame.
     
     Args:
-        data_decoding (pd.DataFrame): DataFrame containing CV data? Columns should contain: name,surname,british,volunteering,gender,tech_comp,med_comp,educ_comp,field_study
-        data_desc (pd.DataFrame): DataFrame containing job descriptions. They are generated using company and associatino names, using the LLM.
+        data_decoding (pd.DataFrame): DataFrame containing CV data Columns should contain: name,surname,british,volunteering,gender,tech_comp,med_comp,educ_comp,field_study
+        data_desc (pd.DataFrame): DataFrame containing job descriptions. They are generated using company and association names, using the LLM.
         
     Returns:
         pd.DataFrame: Final combined DataFrame with everything needed for data analysis and resume generation. Columns: name,surname,british,gender,association,vol_desc,comp_type,comp_name,job_desc,field_of_study,key
@@ -53,7 +53,8 @@ def create_resume_database(data_decoding, data_desc, out_filename='database_all_
     experience.drop_duplicates(subset=['nb'], inplace=True) 
 
     #deleting columns that are not useful anymore and renaming columns for clarity
-    experience = experience.drop(columns = ['nb', 'company', 'ideology'])
+    # experience = experience.drop(columns = ['nb', 'company', 'ideology']) #### WHY IDEOLOGY NOT FOUND ANYMORE?
+    experience = experience.drop(columns = ['nb', 'company'])
     experience = experience.rename(columns={ "description": "job_desc"})
 
     #creating volunteering database 
