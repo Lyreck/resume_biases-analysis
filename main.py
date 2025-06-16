@@ -1,10 +1,11 @@
 import sys
+import os
 import pandas as pd
 
 #est-ce que le logger marche vrmt ? dans quel file ?
 from scripts.utils import init_logging_config
 
-
+os.makedirs("logs", exist_ok=True)
 init_logging_config(filename="logs/main.log")
 
 from scripts import resume_generation
