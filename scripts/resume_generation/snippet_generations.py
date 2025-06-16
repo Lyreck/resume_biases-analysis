@@ -90,7 +90,7 @@ def generate_descriptions(source_data_filename, out_filename="default", model='m
             logging.info("Descriptions for education-related companies generated.")
 
         if asso:
-            for volun in associations["Associations"]:
+            for volun in associations["Volunteering"]:
                 logging.info(f"Generating description for association: {volun}")
                 prompt = f"""
                 You are a resume section generator. I will give
