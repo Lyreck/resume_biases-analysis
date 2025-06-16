@@ -148,3 +148,6 @@ def init_logging_config(
     # Add the handlers
     logger.addHandler(stderr_handler)
     logger.addHandler(file_handler)
+
+    # Remove logging messages from ollama
+    logging.getLogger("ollama.chat").setLevel(logging.WARNING)

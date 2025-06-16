@@ -7,6 +7,7 @@ from scripts.utils import init_logging_config #all logs are stored in the logs f
 os.makedirs("logs", exist_ok=True)
 init_logging_config(filename="logs/main.log")
 
+
 from scripts import resume_generation
 # en gros dans le init je mets direct les packages que je veux importer :)))))))))))
 
