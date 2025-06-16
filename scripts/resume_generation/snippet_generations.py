@@ -33,7 +33,7 @@ def generate_descriptions(source_data_filename, out_filename="default", model='m
     people, comps_tech, comps_med, comps_edu, associations = read_df(source_data_filename)
     logging.info("Data fetched successfully.")
 
-    with open(f'out_files/{out_filename}.csv','w') as file:
+    with open(f'data/{out_filename}.csv','w') as file:
 
         logging.info("Starting the generation of descriptions for companies and associations with mistral-small (might take a while).")
         logging.info("Note: running the LLM locally requires at least 16GB of GPU RAM.")
