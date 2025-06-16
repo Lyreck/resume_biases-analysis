@@ -11,8 +11,8 @@ logger = logging.getLogger(__name__)
 
 
 
-def generate(prompt):
-    response = chat(model='mistral-small', messages=[
+def generate(prompt, model='mistral-small'):
+    response = chat(model=model, messages=[
         {
             'role': 'user',
             'content': prompt,
@@ -21,10 +21,12 @@ def generate(prompt):
 
     return response.message.content
 
-def generate_descriptions(source_data_filename, out_filename="default", tech=True, med=True, edu=True, asso=True):
+def generate_descriptions(source_data_filename, out_filename="default", model='mistral-small', tech=True, med=True, edu=True, asso=True):
     """
     Function to generate descriptions for the different types of companies and associations, using mistral-small 3 and ollama.
     ollama and mistral-small 3 need to be installed locally.
+
+    To use a different model, you will have to download it locally first, and check that your system meets the minimal requirements to run it.
     """
 
     logging.info(f"Fetching data from source file {source_data_filename}.csv...")
@@ -117,13 +119,17 @@ def read_df(filename):
         Tech, med and edu companies, as well as association names.
     """
     
-
+    #make filepath relative to project root.
+    print(os.path.dirname(__file__))
+    data_path = os.path.join(os.path.dirname(__file__), "data", f"{filename}.csv")
+    data_path = os.path.abspath(data_path)
     
-    names = pd.read_csv(f"data/{filename}.csv", 
-                    names=["Name", "Surname", "Associations", "Gender", "Tech_comp", "Med_comp", "Edu_comp"])
+    names = pd.read_csv(data_path)
+    names.columns=["Name", "Surname", "British", "Volunteering", "Gender", "Tech_comp", "Med_comp", "Edu_comp", "Field_study"]
+
 
     people = names[["Name", "Surname", "Gender"]].dropna()#.to_list()
-    associations = names[["Associations"]].dropna()#.to_list()
+    associations = names[["Volunteering"]].dropna()#.to_list()
 
     comps_tech = names[["Tech_comp"]].dropna().drop_duplicates()#.to_list()
     comps_med = names[["Med_comp"]].dropna().drop_duplicates()#.to_list()
@@ -136,11 +142,12 @@ def read_df(filename):
  
 if __name__ == "__main__":
 
-    names = pd.read_csv("data/names_clean.csv", 
-                    names=["Name", "Surname", "Associations", "Gender", "Tech_comp", "Med_comp", "Edu_comp"])
-
+    names = pd.read_csv("data/names_clean.csv")
+    names.columns=["Name", "Surname", "British", "Volunteering", "Gender", "Tech_comp", "Med_comp", "Edu_comp", "Field_study"]
+ 
+                    
     people = names[["Name", "Surname", "Gender"]].dropna()#.to_list()
-    associations = names[["Associations"]].dropna()#.to_list()
+    associations = names[["Volunteering"]].dropna()#.to_list()
 
     comps_tech = names[["Tech_comp"]].dropna().drop_duplicates()#.to_list()
     comps_med = names[["Med_comp"]].dropna().drop_duplicates()#.to_list()
