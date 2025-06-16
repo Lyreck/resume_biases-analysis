@@ -41,7 +41,7 @@ if __name__ == "__main__":
 
     ## We also create a database that stores every information about every resume generated. Every resume is identified by Name+Surname+Company+Association, which is unique for each resume.
     data_decoding = pd.read_csv(f"scripts/resume_generation/data/{source_data_filename}.csv") # the data of job offers
-    data_desc = pd.read_csv("scripts/resume_generationdata/data_desc_test.csv")
+    data_desc = pd.read_csv("scripts/resume_generation/data/data_desc_test.csv")
     
     # Create the all the resumes possible (all combinations) for analysis.
     logging.info("Creating unified resume database")
