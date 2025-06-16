@@ -6,14 +6,8 @@ import logging
 from ollama import chat
 from ollama import ChatResponse
 
-from ..utils import init_logging_config
-# Initialize logging configuration
-init_logging_config(filename='snippet_generations.log')
-
-# # Get the logger
-# logger = logging.getLogger(__name__)
-# # Set the logging level
-# logger.setLevel(logging.INFO)
+import logging
+logger = logging.getLogger(__name__)
 
 
 def generate(prompt):
@@ -38,7 +32,7 @@ def generate_descriptions(comps_tech, comps_med, comps_edu, associations, out_fi
 
         if tech: 
             for comp in comps_tech["Tech_comp"]: #add progress bar
-                print(comp)
+                logging.info(f"Generating description for tech company: {comp}")
                 prompt = f"""
                 You are a resume section generator. I will give
                 you a characteristic. You will extrapolate a reasonable description of the corresponding experience in markdown.
@@ -55,7 +49,7 @@ def generate_descriptions(comps_tech, comps_med, comps_edu, associations, out_fi
 
         if med: 
             for comp in comps_med["Med_comp"]:
-                # print(comp)
+                logging.info(f"Generating description for medical company: {comp}")
                 prompt = f"""
                 You are a resume section generator. I will give
                 you a characteristic. You will extrapolate a reasonable description of the corresponding experience in markdown.
@@ -72,7 +66,7 @@ def generate_descriptions(comps_tech, comps_med, comps_edu, associations, out_fi
 
         if edu:
             for comp in comps_edu["Edu_comp"]:
-                # print(comp)
+                logging.info(f"Generating description for education-related company: {comp}")
                 prompt = f"""
                 You are a resume section generator. I will give
                 you a characteristic. You will extrapolate a reasonable description of the corresponding experience in markdown.
@@ -89,7 +83,7 @@ def generate_descriptions(comps_tech, comps_med, comps_edu, associations, out_fi
 
         if asso:
             for volun in associations["Associations"]:
-                # print(volun)
+                logging.info(f"Generating description for association: {volun}")
                 prompt = f"""
                 You are a resume section generator. I will give
                 you a characteristic. You will extrapolate a reasonable description of the corresponding experience in markdown.

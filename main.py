@@ -2,8 +2,7 @@ import sys
 import os
 import pandas as pd
 
-#est-ce que le logger marche vrmt ? dans quel file ?
-from scripts.utils import init_logging_config
+from scripts.utils import init_logging_config #all logs are stored in the logs folder.
 
 os.makedirs("logs", exist_ok=True)
 init_logging_config(filename="logs/main.log")
@@ -18,6 +17,7 @@ from scripts import resume_generation
 # il faudrait vérifier que le database_generation fait par dad an'est pas dépendant du découpage asso/company.
 
 if __name__ == "__main__":
+    generate_descriptions, generate_pdfs = True, True # booleans that will ultimately be passed as parameters. Tells us which part of the code we want to execute.
     ## First, a minimal example. 
     # I want to generate one resume and one job offer, 
     # and I want to analyze their score, do a t-tes and plot graphs.
