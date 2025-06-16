@@ -9,6 +9,9 @@ from ollama import ChatResponse
 import logging
 logger = logging.getLogger(__name__)
 
+loggers = [logging.getLogger(name) for name in logging.root.manager.loggerDict]
+print(loggers)
+
 
 def generate(prompt):
     response = chat(model='mistral-small', messages=[
