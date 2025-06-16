@@ -120,7 +120,6 @@ def read_df(filename):
     """
     
     #make filepath relative to project root.
-    print(os.path.dirname(__file__))
     data_path = os.path.join(os.path.dirname(__file__), "data", f"{filename}.csv")
     data_path = os.path.abspath(data_path)
     
