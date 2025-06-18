@@ -10,6 +10,7 @@
 import pandas as pd
 import hashlib
 import time as t
+from random import randint
 
 
 from .descriptions_to_pdf import insert_descriptions_to_pdf
@@ -21,17 +22,31 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-def generate_pdfs(data_for_generation, out_directory, verbose=False):
+def generate_pdfs(whole_data_for_generation, out_directory, generation_strategy='all', verbose=False):
     """_summary_
 
     Args:
-        data_for_generation (_type_): _description_
+        whole_data_for_generation (_type_): _description_
         out_directory (_type_): _description_
+        generation_strategy (str): Must be either 'all', 'companies', associations', or 'names'. This parameter allows to limit the number of resumes being created. For example, if the strategy 'companies' is selected, then a batch of resumes will be created across all companies.
         verbose (bool, optional): Put True if you want the LaTeX rendering logs printed in stdout (in the terminal). Defaults to False.
     """
 
+    ## Filter the data_for_generation DataFrame based on the generation_strategy.
 
-    n = len(data_for_generation)
+
+    n = len(whole_data_for_generation)
+
+    if generation_strategy == "all":
+        data_for_generation = whole_data_for_generation.copy()
+
+    if generation_strategy == "companies":
+        line = randint(0,n-1) #sleect line from which we will take a name, surname, association that will be fixed.
+        name, surname, association = whole_data_for_generation.iloc[line][['name', 'surname', 'association']]
+        data_for_generation = whole_data_for_generation[(whole_data_for_generation['name'] == name) & (whole_data_for_generation['surname'] == surname) & (whole_data_for_generation['association'] == association)].copy()
+
+    n = len(data_for_generation) #update n to the number of resumes that will be generated.
+    data_for_generation.reset_index(inplace=True) #reset index is needed in the case where we take a subset of the original dataframe.
 
     keys=["NaN" for _ in range(n)] #this list will contain the keys (=name) of every resume generated.
     # the objective is to append this as a column to the database of data_for_generation.
@@ -49,7 +64,6 @@ def generate_pdfs(data_for_generation, out_directory, verbose=False):
         field_of_study = row['field_of_study']
 
         #data_names['name'] = data_names['name'].str.capitalize()
-
         
         whole_line = name + surname + comp_name + association_name #these 4 variables uniquely identify the Resume.
         keys[index] = whole_line
@@ -61,8 +75,6 @@ def generate_pdfs(data_for_generation, out_directory, verbose=False):
 
         if index == 100:
             logging.info(f"Estimated time to finish generating {n} resumes: {round( ( ((t.time()-t0) / 3600 ) /index)*n,2)} hours")
-        # if index > 100 and verbose:
-        #     progress(int((index+1)/n*100))
 
 
     logging.info(f"Finished creating {n} PDFS in {round( (t.time()-t0) / 3600,2)} hours")

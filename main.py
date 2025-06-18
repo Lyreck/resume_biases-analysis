@@ -65,6 +65,13 @@ if __name__ == "__main__":
     if generate_pdfs:
 
         os.makedirs("scripts/cv_job_parsing/data/resumes_pdf", exist_ok=True) # create output directory if it does not exist yet.)
-        resume_generation.generate_pdfs(data_for_generation, out_directory="scripts/cv_job_parsing/data/resumes_pdf", verbose=False) #verbos
+        resume_generation.generate_pdfs(data_for_generation, generation_strategy='companies', out_directory="scripts/cv_job_parsing/data/resumes_pdf", verbose=False) #verbos
 
-        
+        #soucis Yasmine (test in Overleaf - tried removing CP and add larger footer, does not change anything. pdflatex?)
+        #soucis Oliver
+        # test different progress bars to have a nice looking one.
+        # write docstrings for the generate_pdfs function
+        # Relocate the generate_pdfs function ?
+
+        #another interesting to-do:
+            # - put in place a "report" system for people to report when PDFs look weird, or whn it does not render. This could help correct issues
