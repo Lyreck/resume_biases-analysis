@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 
 
-from scripts import resume_generation
+from scripts import resume_generation, cv_job_parsing
 # en gros dans le init je mets direct les packages que je veux importer :)))))))))))
 
 # Should I create a class with attributes ? Idea to explore for better adaptability of the codebase?
@@ -82,4 +82,11 @@ if __name__ == "__main__":
     #############################################################################################
     
     if parse_resumes:
+
+        cv_job_parsing.pdf_to_json()
+
+        # Ensure the output directories for the experiments exists
+        os.makedirs("data/dataframes/name", exist_ok=True)
+        os.makedirs("data/dataframes/job", exist_ok=True)
+        os.makedirs("data/dataframes/volunteering", exist_ok=True)
         pass

@@ -10,7 +10,8 @@ from scripts.ResumeProcessor import ResumeProcessor
 from scripts.JobDescriptionProcessor import JobDescriptionProcessor
 from scripts.utils import get_filenames_from_dir, init_logging_config
 
-init_logging_config()
+
+logger=logging.getLogger(__name__)
 
 
 def read_json(filename):
