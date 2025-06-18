@@ -23,7 +23,7 @@ from scripts import resume_generation
 # il faudrait vérifier que le database_generation fait par dad an'est pas dépendant du découpage asso/company.
 
 if __name__ == "__main__":
-    generate_descriptions, generate_pdfs = False, True # booleans that will ultimately be passed as parameters. Tells us which part of the code we want to execute.
+    generate_descriptions, generate_pdfs, parse_resumes = False, False, True # booleans that will ultimately be passed as parameters. Tells us which part of the code we want to execute.
     ## First, a minimal example. 
     # I want to generate one resume and one job offer, 
     # and I want to analyze their score, do a t-tes and plot graphs.
@@ -68,10 +68,18 @@ if __name__ == "__main__":
         resume_generation.generate_pdfs(data_for_generation, generation_strategy='companies', out_directory="scripts/cv_job_parsing/data/resumes_pdf", verbose=False) #verbos
 
         #soucis Yasmine (test in Overleaf - tried removing CP and add larger footer, does not change anything. pdflatex?)
-        #soucis Oliver
         # test different progress bars to have a nice looking one.
         # write docstrings for the generate_pdfs function
         # Relocate the generate_pdfs function ?
 
         #another interesting to-do:
             # - put in place a "report" system for people to report when PDFs look weird, or whn it does not render. This could help correct issues
+
+    #############################################################################################
+    ########### Parse generated PDFs to JSON using Resume Matcher functions #####################
+    ########### This part is specific to each ATS algorithm and may vary    #####################
+    ###########            if we are to implement ofther ones               #####################
+    #############################################################################################
+    
+    if parse_resumes:
+        pass
