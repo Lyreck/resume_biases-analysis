@@ -2,9 +2,9 @@ import json
 import os
 import pathlib
 
-from scripts.Extractor import DataExtractor
-from scripts.KeytermsExtraction import KeytermExtractor
-from scripts.utils.Utils import CountFrequency, TextCleaner, generate_unique_id
+from scripts.cv_job_parsing.scripts.Extractor import DataExtractor
+from scripts.cv_job_parsing.scripts.KeytermsExtraction import KeytermExtractor
+from scripts.cv_job_parsing.scripts.utils.Utils import CountFrequency, TextCleaner, generate_unique_id
 
 SAVE_DIRECTORY = "../../Data/Processed/JobDescription"
 

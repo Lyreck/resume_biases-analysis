@@ -39,18 +39,13 @@
 
 import os
 from pdf_to_json import pdf_to_json
-from extract_score import extract_score
+from extract_score import extract_score, process_pair
 import pandas as pd
 import time as t
 from multiprocessing import Pool, cpu_count
 
 from fetch_specific_resumes import fetch_resume, fetch_job_offer
 
-def process_pair(pair):
-    resume, job_description = pair
-    score = extract_score(resume, job_description)
-    # print(f"Score between {resume} and {job_description} is: {score}")
-    return (resume, job_description, score)
 
 if __name__ == "__main__":
     first_experiment, second_experiment, third_experiment = False, False, True

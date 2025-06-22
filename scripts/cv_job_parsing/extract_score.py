@@ -40,3 +40,18 @@ def extract_score(resume_name, jd_name):
     return similarity_score
 
 
+def process_pair(pair):
+    """Process a resume, job_description .json pair by computing their similarity score.
+
+    Args:
+        pair (tuple): contains .json names of resume and job desc to score.
+
+    Returns:
+        tuple: (resume_name, jobdesc_name, and the score between the two)
+    """
+    resume, job_description = pair
+    score = extract_score(resume, job_description)
+    # print(f"Score between {resume} and {job_description} is: {score}")
+    return (resume, job_description, score)
+
+

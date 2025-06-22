@@ -1,7 +1,9 @@
 import sys
 import os
+import re
 import time as t
 import pandas as pd
+from rich.progress import track #progress bar
 
 from scripts.utils import init_logging_config #all logs are stored in the logs folder.
 
@@ -23,7 +25,8 @@ from scripts import resume_generation, cv_job_parsing
 # il faudrait vérifier que le database_generation fait par dad an'est pas dépendant du découpage asso/company.
 
 if __name__ == "__main__":
-    generate_descriptions, generate_pdfs, parse_resumes = False, False, True # booleans that will ultimately be passed as parameters. Tells us which part of the code we want to execute.
+    generate_descriptions, generate_pdfs, generate_offers, parse_files = False, False, True, True # booleans that will ultimately be passed as parameters. Tells us which part of the code we want to execute.
+    multiprocessing=True #whether to use multiprocessing when computing score, or not.
     ## First, a minimal example. 
     # I want to generate one resume and one job offer, 
     # and I want to analyze their score, do a t-tes and plot graphs.
@@ -75,18 +78,82 @@ if __name__ == "__main__":
         #another interesting to-do:
             # - put in place a "report" system for people to report when PDFs look weird, or whn it does not render. This could help correct issues
 
+
+    #############################################################################################
+    ########### Generate PDFs from the job offers given (in PDF, or scraped). ###################
+    ############################################################################################# 
+
+    if generate_offers:
+        pass #TOBEDONE
+
     #############################################################################################
     ########### Parse generated PDFs to JSON using Resume Matcher functions #####################
     ########### This part is specific to each ATS algorithm and may vary    #####################
     ###########            if we are to implement ofther ones               #####################
     #############################################################################################
     
-    if parse_resumes:
+    if parse_files: #parse both resumes and job offers.
+        #for the moment, we process all resumes without discrimination. I would like to eventually add parameters that allow to select certain experiments? Would help run on smaller machines.
 
         cv_job_parsing.pdf_to_json()
 
         # Ensure the output directories for the experiments exists
-        os.makedirs("data/dataframes/name", exist_ok=True)
-        os.makedirs("data/dataframes/job", exist_ok=True)
-        os.makedirs("data/dataframes/volunteering", exist_ok=True)
-        pass
+        os.makedirs("scripts/cv_job_parsing/data/score_dataframes", exist_ok=True)
+
+        if not multiprocessing:
+            scores, resume_pdf_names, non_generated_resumes = [],[],0
+            for job_offer_json_name in os.listdir("scripts/cv_job_parsing/data/JobDescription"):
+                job_offer = re.search(r"(?<=JobDescription-).+?(?=\.pdf)", job_offer_json_name)
+                logging.info(f"Computing compatibility score of all Resumes with {job_offer}.")
+                
+                for resume_pdf_name in track(os.listdir("scripts/cv_job_parsing/data/Resumes")):
+                    try:
+                        resume_json_name = cv_job_parsing.fetch_resume(resume_pdf_name)
+                        resume_pdf_names.append(resume_pdf_name)
+
+                        scores.append(cv_job_parsing.extract_score(resume_json_name, job_offer_json_name))
+
+                    except ValueError as e:
+                        non_generated_resumes+=1 #if fetching fails and raises a ValueError, we count it as a non generated resume (it means it was in the database, but the .tex was bugged). 
+
+                # Save the scores to a CSV file
+                data = {"Resume": resume_pdf_names, "JobDescription": [job_offer_json_name for _ in resume_pdf_names], "Score": scores, "adapted": [1 for _ in resume_pdf_names]} #job_offer_json_name should change to the pdf file if we want to automate the whole thing and stay coherent with the key for the Resume database.
+                df = pd.DataFrame(data=data)
+
+                df.to_csv(f"scripts/cv_job_parsing/data/dataframes/{job_offer}.csv", index=False)
+                logging.info(f"While fetching resume json files, we found {non_generated_resumes} non-generated resumes.")
+
+
+        if multiprocessing:
+            from multiprocessing import Pool, cpu_count
+
+            # Prepare list of all (resume, job_description) pairs
+            resume_list = os.listdir("Data/Processed/Resumes")
+            job_list = os.listdir("Data/Processed/JobDescription")
+            pairs = [(resume, job) for resume in resume_list for job in job_list]
+
+            n = len(pairs)
+
+            ###### Time estimation
+            t0 = t.time()
+
+            # Set up the pool - you can adjust the number of processes if needed
+            with Pool(processes=cpu_count()-1) as pool:
+                results = pool.map(cv_job_parsing.process_pair, pairs[:100])
+
+            elapsed_time = (t.time() - t0) / 3600
+            logging.info(f"Time estimation to compute score for {n} pairs (estimation sample: {100}): {(elapsed_time / 100)*n:.2f} hours.")
+            #####
+
+            t0 = t.time()
+
+            # Set up the pool - you can adjust the number of processes if needed
+            with Pool(processes=cpu_count()-1) as pool:
+                results = pool.map(cv_job_parsing.process_pair, pairs)
+
+            elapsed_time = (t.time() - t0) / 3600
+            logging.info(f"Finished scoring {n} pairs in {elapsed_time:.2f} hours.")
+
+            # Convert results to DataFrame
+            df = pd.DataFrame(results, columns=["Resume", "JobDescription", "Score"])
+            df.to_csv("scripts/cv_job_parsing/data/dataframes/all_scores.csv", index=False)
