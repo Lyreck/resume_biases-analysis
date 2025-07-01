@@ -139,7 +139,7 @@ if __name__ == "__main__":
 
             # Set up the pool - you can adjust the number of processes if needed
             with Pool(processes=cpu_count()-1) as pool:
-                results = pool.map(cv_job_parsing.process_pair, pairs[:100])
+                results = pool.map(cv_job_parsing.process_pair, pairs[:min(n,100)])
 
             elapsed_time = (t.time() - t0) / 3600
             logging.info(f"Time estimation to compute score for {n} pairs (estimation sample: {100}): {(elapsed_time / 100)*n:.2f} hours.")
