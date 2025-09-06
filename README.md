@@ -12,7 +12,7 @@ See the project's paper here: https://pouvoirdasha.github.io/Decoding_Biases_in_
 
 # Organization of the code
 
-For the sake of clarity and readbility, we split the code in 4 main folders:
+For the sake of clarity and readability, we split the code in 4 main folders:
 - resume_generation: all code related to generating standardized Resumes, based on a specific skillset (given a given CV, we change some select social cues, one at a time)
 - job-posting_generation: all code related to generating standardized job offers from real (scraped) job offers
 - cv-job_parsing: all code that relates to the automated parsing of Resumes
@@ -24,4 +24,4 @@ The resume sections are LLM-generated and post-processed automatically, but stil
 We are currently working on resolving some dependcy version issues between Resume-Matcher and our own programs. *This is a work in progress*.
 
 
-This code uses [Resume-Matcher](https://github.com/srbhr/Resume-Matcher) for resume parsing, and [Mistral-small 3](https://ollama.com/library/mistral-small) through [Ollama Python](https://github.com/ollama/ollama-python) for resume generation.
+This code uses [Resume-Matcher](https://github.com/srbhr/Resume-Matcher) for resume parsing, and [Mistral-small 3](https://ollama.com/library/mistral-small) through [Ollama Python](https://github.com/ollama/ollama-python) for resume generation, though the methodology can of course be adapted to different algorithms, using a different LLM.
