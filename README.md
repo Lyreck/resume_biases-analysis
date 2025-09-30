@@ -25,7 +25,7 @@ The resume sections are LLM-generated and post-processed automatically, but stil
 
 ## Known issues
 1. There is a dependency issue between Resume-Matcher and ollama-python. We are currently working on resolving this. *This is a work in progress*.
-2. The resume-parsing code omits some parts of the sentences when it encounters a hyphen "-". This should be resolved in the future versions.
+2. The resume sections generator omits some parts of the sentences when it encounters a hyphen "-". This should be resolved in the future versions.
 
 
 This code uses [Resume-Matcher](https://github.com/srbhr/Resume-Matcher) for resume parsing, and [Mistral-small 3](https://ollama.com/library/mistral-small) through [Ollama Python](https://github.com/ollama/ollama-python) for resume generation, though the methodology can of course be adapted to different algorithms, using a different LLM.
