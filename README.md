@@ -1,13 +1,14 @@
 See the project's paper here: https://pouvoirdasha.github.io/Decoding_Biases_in_Resume_Matcher/
+This is a work in progress. We are working on a more polished version that will be easy to deploy on any machine with a 16GB GPU.
 
 # Installation
 
-/!\ To clone the repository properly, please ensure you clone **recursively**. Otherwise, Resume-Matcher will not be copied properly.
+/!\ When cloning the reposiroty, if you wish to get all the functions of Resume-Matcher, please ensure you clone **recursively**. Otherwise, Resume-Matcher will not be copied properly.
 
 => `git clone --recursive https://github.com/Lyreck/resume_biases-analysis.git`
 
 /!\ Resume-Matcher works with Python 3.11.0. 
-- You can install it using pyenv: `pyenv install python 3.11.0`
+- You can install it using pyenv (or other compatible system): `pyenv install python 3.11.0`
 - And then create a virtual environment using this python version: `pyenv virtualenv 3.11.00 env-name`
 
 # Organization of the code
