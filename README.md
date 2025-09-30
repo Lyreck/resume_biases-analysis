@@ -23,8 +23,9 @@ For the sake of clarity and readability, we split the code in 4 main folders:
 For the moment this code only works bit-by-bit and is more a proof-of-concept than a production-ready package.
 The resume sections are LLM-generated and post-processed automatically, but still require manual review in some cases (missing "-" to separate experiences for example) if one is to have a "perfect" CV generator.
 
-## Known issues: 
+## Known issues
 1. There is a dependency issue between Resume-Matcher and ollama-python. We are currently working on resolving this. *This is a work in progress*.
+2. The resume-parsing code omits some parts of the sentences when it encounters a hyphen "-". This should be resolved in the future versions.
 
 
 This code uses [Resume-Matcher](https://github.com/srbhr/Resume-Matcher) for resume parsing, and [Mistral-small 3](https://ollama.com/library/mistral-small) through [Ollama Python](https://github.com/ollama/ollama-python) for resume generation, though the methodology can of course be adapted to different algorithms, using a different LLM.
