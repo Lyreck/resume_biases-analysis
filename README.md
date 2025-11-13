@@ -3,7 +3,7 @@ This is a work in progress. We are working on a more polished version that will 
 
 # Installation
 
-/!\ When cloning the reposiroty, if you wish to get all the functions of Resume-Matcher, please ensure you clone **recursively**. Otherwise, Resume-Matcher will not be copied properly.
+/!\ When cloning the repository, if you wish to get all the functions of Resume-Matcher, please ensure you clone **recursively**. Otherwise, Resume-Matcher will not be copied properly.
 
 => `git clone --recursive https://github.com/Lyreck/resume_biases-analysis.git`
 
